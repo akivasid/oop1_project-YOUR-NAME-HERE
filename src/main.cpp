@@ -12,5 +12,5 @@ int main()
 	WelcomeWindow window(WelcomeConsts::WELCOME_WINDOW_SIZE, WelcomeConsts::WINDOW_NAME);
 
 	window.draw();
-	std::cout << window.handleEvent();	
+	std::cout << window.handleEvent();
 }
