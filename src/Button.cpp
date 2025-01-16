@@ -6,18 +6,7 @@ Button::Button(const sf::Vector2f& location, const sf::Vector2f& size, const std
 		m_buttonText(FontHolder::getText()), m_recButton(m_buttonSize)
 {
 	m_recButton.setPosition(m_buttonLocation);
-	m_buttonText.setString(m_buttonName);
-	//m_buttonText.setCharacterSize(40);
-
-
-	float sizeX = m_buttonText.getGlobalBounds().width;
-	float sizeY = m_buttonText.getGlobalBounds().height;
-
-	m_buttonText.setOrigin(sf::Vector2f(sizeX/2, sizeY/2));
-	m_buttonText.setFillColor(sf::Color::Red);
-
-	sf::Vector2f center(m_buttonLocation.x + m_buttonSize.x / 2, m_buttonLocation.y + m_buttonSize.y / 2);
-	m_buttonText.setPosition(center);
+	textCare();
 }
 
 
@@ -35,3 +24,27 @@ void Button::drawButton(sf::RenderWindow& window)
 	window.draw(m_buttonText);
 }
 
+void Button::setFrame(sf::RenderWindow& window, const float& frameThickness, const sf::Color& color)
+{
+	m_recButton.setOutlineThickness(frameThickness);
+	m_recButton.setOutlineColor(color);
+	drawButton(window);
+}
+
+
+
+//===================================== private functions ===================================
+
+void Button::textCare()
+{
+	m_buttonText.setString(m_buttonName);
+	m_buttonText.setCharacterSize(int(m_buttonSize.y)/4);//make it smarter
+
+	float sizeX = m_buttonText.getGlobalBounds().width;
+	float sizeY = m_buttonText.getGlobalBounds().height;
+	m_buttonText.setOrigin(sf::Vector2f(sizeX / 2, sizeY / 2));
+	sf::Vector2f center(m_buttonLocation.x + m_buttonSize.x / 2, m_buttonLocation.y + m_buttonSize.y / 2);
+	m_buttonText.setPosition(sf::Vector2f(center/*.x, center.y - sizeY / 2*/));//does not need it
+
+	m_buttonText.setFillColor(sf::Color::Red);
+}

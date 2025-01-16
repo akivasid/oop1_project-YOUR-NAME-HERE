@@ -9,8 +9,11 @@ public:
 	Button(const sf::Vector2f& loc, const sf::Vector2f& size, const std::string& name);
 
 	//public functions
-	bool buttonPressed(const sf::Vector2f& pressedLoc);
+	bool buttonPressed(const sf::Vector2f& pressedLoc);//maybe change name
 	void drawButton(sf::RenderWindow& window);
+	void setFrame(sf::RenderWindow& window, const float& frameThickness, const sf::Color& color);
+
+
 
 
 
@@ -21,4 +24,7 @@ private:
 	sf::RectangleShape m_recButton;
 	std::string m_buttonName;
 	sf::Text m_buttonText;
+
+	//private members
+	void textCare();
 };
