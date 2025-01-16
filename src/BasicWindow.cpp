@@ -19,4 +19,3 @@ void BasicWindow::close()
 	if(isOpen())
 		m_window.close();
 }
-

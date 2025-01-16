@@ -42,17 +42,19 @@ bool WelcomeWindow::handleEvent()
 				break;
 			
 			case sf::Event::MouseButtonReleased:
-				pressedLocation = sf::Vector2f(event.mouseButton.x, event.mouseButton.y);
+				pressedLocation = sf::Vector2f(float(event.mouseButton.x), float(event.mouseButton.y));
 				if (m_play.buttonPressed(pressedLocation))
 				{
 					m_window.close();
 					return true;
 				}
+
 				else if (m_exit.buttonPressed(pressedLocation))
 				{
 					m_window.close();
 					return false;
 				}
+
 				else if (m_help.buttonPressed(pressedLocation))
 				{
 					helpSituation();
@@ -123,7 +125,6 @@ void WelcomeWindow::handleMovement(const sf::Vector2f& locMove, sf::Vector2f& la
 		else if(!m_backToMenu.buttonPressed(locMove) && m_backToMenu.buttonPressed(lastMove))
 			m_backToMenu.setFrame(m_window, 0.0f, sf::Color::Green);
 		helpSituation();
-		
 	}
 	
 	else
