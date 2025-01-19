@@ -12,8 +12,7 @@ class WelcomeWindow : public BasicWindow
 {
 public:
 	//constructor
-	WelcomeWindow(const sf::Vector2f& size, const std::string& windowName);
-
+	WelcomeWindow();
 	//public functions
 	void draw();
 	bool handleEvent();

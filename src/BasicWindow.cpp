@@ -19,3 +19,13 @@ void BasicWindow::close()
 	if(isOpen())
 		m_window.close();
 }
+
+void BasicWindow::clear()
+{
+	m_window.clear();
+}
+
+void BasicWindow::display()
+{
+	m_window.display();
+}

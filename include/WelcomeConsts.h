@@ -14,7 +14,7 @@ namespace WelcomeConsts
 	const std::string PLAY_NAME = "PLAY";
 	const std::string HELP_NAME = "HELP";
 	const std::string EXIT_NAME = "EXIT";
-	const std::string BACK_NAME = "MENU";
+	const std::string BACK_NAME = "X";
 	const std::string WINDOW_NAME = "SELECTION";
 	const std::string HELP_FILE_NAME = "Help.txt";
 }

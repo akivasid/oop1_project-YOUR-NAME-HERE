@@ -3,8 +3,9 @@
 
 //================================= constructor ===========================
 
-WelcomeWindow::WelcomeWindow(const sf::Vector2f& size, const std::string& windowName)
-	:BasicWindow(size, windowName), m_play(WelcomeConsts::PLAY_LOCATION, WelcomeConsts::BUTTON_SIZE, WelcomeConsts::PLAY_NAME),
+WelcomeWindow::WelcomeWindow()
+	:BasicWindow(WelcomeConsts::WELCOME_WINDOW_SIZE, WelcomeConsts::WINDOW_NAME),
+	m_play(WelcomeConsts::PLAY_LOCATION, WelcomeConsts::BUTTON_SIZE, WelcomeConsts::PLAY_NAME),
 	m_help(WelcomeConsts::HELP_LOCATION, WelcomeConsts::BUTTON_SIZE, WelcomeConsts::HELP_NAME),
 	m_exit(WelcomeConsts::EXIT_LOCATION, WelcomeConsts::BUTTON_SIZE, WelcomeConsts::EXIT_NAME), m_helpText(FontHolder::getText()),
 	m_backToMenu(WelcomeConsts::BACK_LOCATION, WelcomeConsts::BACK_BUTTON_SIZE, WelcomeConsts::BACK_NAME)
@@ -17,11 +18,11 @@ WelcomeWindow::WelcomeWindow(const sf::Vector2f& size, const std::string& window
 
 void WelcomeWindow::draw()
 {
-	m_window.clear();
+	clear();
 	m_play.drawButton(m_window);
 	m_help.drawButton(m_window);
 	m_exit.drawButton(m_window);
-	m_window.display();
+	display();
 }
 
 bool WelcomeWindow::handleEvent()

@@ -12,6 +12,8 @@ public:
 
 	//public functions
 	bool isOpen() const;
+	void clear(); 
+	void display();
 	void close();
 	
 
