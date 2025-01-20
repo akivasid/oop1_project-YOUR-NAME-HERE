@@ -6,12 +6,15 @@ class GameInformation
 {
 public:
 	//constructor
-	GameInformation(const int guardAmount);
+	GameInformation();
 
 	//public functions
+	void initializer(int guards);
 	void updateOutput();
 	const sf::RectangleShape& getInfoRec() const;
 	const sf::Text& getInfoOutput() const;
+	bool timeEnded() const;
+	void updateCountDown();
 
 
 private:
@@ -23,6 +26,7 @@ private:
 
 	sf::RectangleShape m_rectangle;
 	sf::Text m_text;
-
+	sf::Clock m_clock;
+	sf::Time m_countDown;
 };
 

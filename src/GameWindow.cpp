@@ -1,15 +1,27 @@
 #include "GameWindow.h"
 
 
-GameWindow::GameWindow(int row, int col)
-	:BasicWindow(GameWindowConsts::WINDOW_SIZE, GameWindowConsts::GAME_WINDOW_NAME), m_rows(row), m_cols(col),
-		m_tileSize(sf::Vector2f(GameWindowConsts::GAME_SIZE.x / col, GameWindowConsts::GAME_SIZE.y / row))
+//================================== constructor =====================================
+
+GameWindow::GameWindow()
+	:BasicWindow(GameWindowConsts::WINDOW_SIZE, GameWindowConsts::GAME_WINDOW_NAME)
 {
-	resetIndex();
+	
 }
 
 
 //================================== public functions =====================================
+
+
+void GameWindow::initializer(int row, int col)
+{
+	m_rows = row;
+	m_cols = col;
+	m_tileSize = sf::Vector2f(GameWindowConsts::GAME_SIZE.x / m_cols, GameWindowConsts::GAME_SIZE.y / m_rows);
+	resetIndex();
+}
+
+
 sf::Vector2f GameWindow::getTopLeft(const sf::Vector2f& newLocation) const
 {
 	if (newLocation.x > GameWindowConsts::GAME_SIZE.x || newLocation.x < 0
@@ -22,15 +34,6 @@ sf::Vector2f GameWindow::getTopLeft(const sf::Vector2f& newLocation) const
 }
 
 
-void GameWindow::resetLevelSizes(int row, int col)
-{
-	m_rows = row;
-	m_cols = col;
-	m_tileSize = sf::Vector2f(GameWindowConsts::GAME_SIZE.x / m_cols, GameWindowConsts::GAME_SIZE.y / m_rows);
-	resetIndex();
-}
-
-
 void GameWindow::resetIndex()
 {
 	m_boardIndex.resize(m_rows);
@@ -38,6 +41,7 @@ void GameWindow::resetIndex()
 		for (int j = 0; j < m_cols; j++)
 			m_boardIndex[i].push_back(sf::Vector2f(j * m_tileSize.x, i * m_tileSize.y));
 }
+
 
 void GameWindow::draw(const sf::RectangleShape& rectangle)
 {
@@ -49,6 +53,7 @@ void GameWindow::draw(const sf::Text& text)
 {
 	m_window.draw(text);
 }
+
 
 void GameWindow::draw(const sf::Sprite& picture)
 {

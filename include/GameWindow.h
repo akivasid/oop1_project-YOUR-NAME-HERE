@@ -8,18 +8,17 @@ class GameWindow : public BasicWindow
 {
 public:
 	//constructor
-	GameWindow(int rows, int cols);
+	GameWindow();
 
 	//public functions
 	sf::Vector2f getTopLeft(const sf::Vector2f& newLocation) const;
-	void resetLevelSizes(int row, int col);
+	void initializer(int row, int col);
 	void resetIndex();
 	
 	void draw(const sf::RectangleShape& rectangle);
 	void draw(const sf::Text& text);
 	void draw(const sf::Sprite& picture);
 	
-
 private:
 	//members
 	int m_rows;

@@ -4,8 +4,8 @@
 BasicWindow::BasicWindow(const sf::Vector2f size, const std::string& windowName)
 	:m_windowSize(size), m_window(sf::VideoMode(unsigned(m_windowSize.x), unsigned(m_windowSize.y)), windowName)
 {
-	m_window.clear();
-	m_window.display();
+	//m_window.clear();
+	//m_window.display();
 }
 
 
