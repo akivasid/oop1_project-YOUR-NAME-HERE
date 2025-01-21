@@ -6,9 +6,12 @@
 
 class Participant
 {
-	Participant(const sf::Vector2f& location, const ParticipantType& type);
+public:
+	//constructor
+	Participant(const sf::Vector2f& location, const sf::Vector2f& wantedSize, const ParticipantType& type);
 
-
+	//public
+	sf::Sprite getParticipantSprite();
 
 
 
@@ -19,5 +22,5 @@ protected:
 	ParticipantType m_type;
 
 	//public functions
-	void pictureArrangement();
+	void pictureArrangement(const sf::Vector2f& wantedSize);
 };

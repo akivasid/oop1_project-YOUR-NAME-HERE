@@ -3,7 +3,8 @@
 //======================================= constructor =========================================
 
 GameInformation::GameInformation()
-	:m_level(0), m_rectangle(GameInfoConsts::INFO_SIZE), m_text(FontHolder::getText()), m_score(0)
+	:m_level(0), m_rectangle(GameInfoConsts::INFO_SIZE), m_text(FontHolder::getText()), m_score(0),
+	m_clock(), m_countDown(), m_life(0), m_possiblePoinst(0)
 {
 	m_rectangle.setPosition(GameInfoConsts::INFO_LOCATION);
 	m_rectangle.setFillColor(GameInfoConsts::INFO_COLOR);

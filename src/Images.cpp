@@ -1,10 +1,6 @@
 #include "Images.h"
 
-sf::Texture Images::m_player;
-sf::Texture Images::m_guard;
-sf::Texture Images::m_wall;
-sf::Texture Images::m_rock;
-sf::Texture Images::m_door;
+std::vector <sf::Texture> Images::m_pictures;
 
 //=============================================== public functions ======================================
 
@@ -12,64 +8,39 @@ void Images::loadAllTextures()
 {
 	loadPlayer();
 	loadGuard();
-	loadWall();
-	loadRock();
 	loadDoor();
+	loadRock();
+	loadWall();
 }
 
 
-sf::Sprite Images::getSpritePlayer()
+sf::Sprite Images::getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize)//remeber to check for memory exception
 {
+	int index = static_cast<int>(type);
+	
 	sf::Sprite sprite;
-	sprite.setTexture(m_player);
+	sprite.setTexture(m_pictures[index]);
+	float scaleX =  wantedSize.x / m_pictures[index].getSize().x;
+	float scaleY =  wantedSize.y / m_pictures[index].getSize().y;
+	sprite.setScale(sf::Vector2f(scaleX, scaleY));
+
 	return sprite;
 }
 
 
-sf::Sprite Images::getSpriteGuard()
-{
-	sf::Sprite sprite;
-	sprite.setTexture(m_guard);
-	return sprite;
-}
+//=============================================== private functions ======================================
 
-
-sf::Sprite Images::getSpriteWall()
-{
-	sf::Sprite sprite;
-	sprite.setTexture(m_wall);
-	return sprite;
-}
-
-
-sf::Sprite Images::getSpriteRock()
-{
-	sf::Sprite sprite;
-	sprite.setTexture(m_rock);
-	return sprite;
-}
-
-
-sf::Sprite Images::getSpriteDoor()
-{
-	sf::Sprite sprite;
-	sprite.setTexture(m_door);
-	return sprite;
-}
-
-
-//=============================================== public functions ======================================
 
 void Images::loadPlayer()
 {
-	if (!m_player.loadFromFile(ImagesConst::NAME_PLAYER))
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_PLAYER))
 		std::cerr << "The image named" << ImagesConst::NAME_PLAYER << "was not loaded\n";
 }
 
 
 void Images::loadGuard()
 {
-	if (!m_guard.loadFromFile(ImagesConst::NAME_GUARD))
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_GUARD))
 		std::cerr << "The image named" << ImagesConst::NAME_GUARD << "was not loaded\n";
 
 }
@@ -77,7 +48,7 @@ void Images::loadGuard()
 
 void Images::loadWall()
 {
-	if (!m_wall.loadFromFile(ImagesConst::NAME_WALL))
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_WALL))
 		std::cerr << "The image named" << ImagesConst::NAME_WALL << "was not loaded\n";
 
 }
@@ -85,13 +56,13 @@ void Images::loadWall()
 
 void Images::loadRock()
 {
-	if (!m_rock.loadFromFile(ImagesConst::NAME_ROCK))
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_ROCK))
 		std::cerr << "The image named" << ImagesConst::NAME_ROCK << "was not loaded\n";
 }
 
 
 void Images::loadDoor()
 {
-	if (!m_door.loadFromFile(ImagesConst::NAME_DOOR))
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_DOOR))
 		std::cerr << "The image named" << ImagesConst::NAME_DOOR << "was not loaded\n";
 }

@@ -4,6 +4,7 @@
 int main()
 {
 	FontHolder::loadFont();
+	Images::loadAllTextures();
 
 	GeneralManager progManager;
 	progManager.runProgram();

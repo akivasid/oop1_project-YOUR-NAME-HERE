@@ -4,10 +4,9 @@
 //================================== constructor =====================================
 
 GameWindow::GameWindow()
-	:BasicWindow(GameWindowConsts::WINDOW_SIZE, GameWindowConsts::GAME_WINDOW_NAME)
-{
-	
-}
+	:BasicWindow(GameWindowConsts::WINDOW_SIZE, GameWindowConsts::GAME_WINDOW_NAME), m_boardIndex(),
+	m_rows(0), m_cols(0), m_tileSize(0.f,0.f)
+{}
 
 
 //================================== public functions =====================================
@@ -28,18 +27,24 @@ sf::Vector2f GameWindow::getTopLeft(const sf::Vector2f& newLocation) const
 		|| newLocation.y > GameWindowConsts::GAME_SIZE.y || newLocation.y < 0)
 		return sf::Vector2f(-1, -1);
 
-	int row = static_cast <int> (newLocation.x / m_tileSize.x);
-	int col = static_cast <int> (newLocation.y / m_tileSize.y);
+	int row = static_cast <int> (newLocation.y / m_tileSize.y);
+	int col = static_cast <int> (newLocation.x / m_tileSize.x);
 	return m_boardIndex[row][col];
 }
 
 
 void GameWindow::resetIndex()
 {
+	m_boardIndex.clear();
 	m_boardIndex.resize(m_rows);
 	for (int i = 0; i < m_rows; i++)
 		for (int j = 0; j < m_cols; j++)
 			m_boardIndex[i].push_back(sf::Vector2f(j * m_tileSize.x, i * m_tileSize.y));
+}
+
+const sf::Vector2f GameWindow::getTileSize() const
+{
+	return m_tileSize;
 }
 
 

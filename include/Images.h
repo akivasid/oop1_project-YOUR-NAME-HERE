@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "ImagesConst.h"
+#include "ParticipantType.h"
 
 class Images 
 {
@@ -8,19 +10,12 @@ class Images
 public:
 	//public functions
 	static void loadAllTextures();
-	static sf::Sprite getSpritePlayer();
-	static sf::Sprite getSpriteGuard();
-	static sf::Sprite getSpriteWall();
-	static sf::Sprite getSpriteRock();
-	static sf::Sprite getSpriteDoor();
-
+	static sf::Sprite getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize);
+	
+	
 private:
 	//members
-	static sf::Texture m_player;
-	static sf::Texture m_guard;
-	static sf::Texture m_wall;
-	static sf::Texture m_rock;
-	static sf::Texture m_door;
+	static std::vector <sf::Texture> m_pictures;
 	
 	//private funcdtions
 	static void loadPlayer();

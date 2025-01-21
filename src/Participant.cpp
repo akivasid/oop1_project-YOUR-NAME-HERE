@@ -3,36 +3,41 @@
 
 //================================== constructor =====================================
 
-Participant::Participant(const sf::Vector2f& location, const ParticipantType& type)
+Participant::Participant(const sf::Vector2f& location, const sf::Vector2f& wantedSize, const ParticipantType& type)
 	:m_location(location), m_type(type)
 {
-	pictureArrangement();
+	pictureArrangement(wantedSize);
+	m_picture.setPosition(m_location);
 }
 
 //================================== public functions =====================================
 
+sf::Sprite Participant::getParticipantSprite()
+{
+	return m_picture;
+}
 
 
 //================================== private functions =====================================
 
-void Participant::pictureArrangement()
+void Participant::pictureArrangement(const sf::Vector2f& wantedSize)
 {
 	switch (m_type)
 	{
 	case ParticipantType::Player:
-		m_picture = Images::getSpritePlayer();
+		m_picture = Images::getSprite(ParticipantType::Player, wantedSize);
 		break;
 	case ParticipantType::Guard:
-		m_picture = Images::getSpriteGuard();
+		m_picture = Images::getSprite(ParticipantType::Guard, wantedSize);
 		break;
 	case ParticipantType::Door:
-		m_picture = Images::getSpriteDoor();
+		m_picture = Images::getSprite(ParticipantType::Door, wantedSize);
 		break;
 	case ParticipantType::Rock:
-		m_picture = Images::getSpriteRock();
+		m_picture = Images::getSprite(ParticipantType::Rock, wantedSize);
 		break;
 	case ParticipantType::Wall:
-		m_picture = Images::getSpriteWall();
+		m_picture = Images::getSprite(ParticipantType::Wall, wantedSize);
 		break;
 	case ParticipantType::GiftKillGuard:
 		break;
@@ -45,5 +50,4 @@ void Participant::pictureArrangement()
 	default:
 		break;
 	}
-
 }

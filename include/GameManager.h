@@ -1,8 +1,7 @@
 #pragma once
 #include "GameWindow.h"
 #include "GameInformation.h"
-
-
+#include "Player.h"
 
 
 class GameManager
