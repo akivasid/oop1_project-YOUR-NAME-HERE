@@ -48,6 +48,13 @@ const sf::Vector2f GameWindow::getTileSize() const
 }
 
 
+const sf::Event GameWindow::pollEvent()
+{
+	sf::Event event; 
+	while (m_window.pollEvent(event));
+	return event;
+}
+
 void GameWindow::draw(const sf::RectangleShape& rectangle)
 {
 	m_window.draw(rectangle);

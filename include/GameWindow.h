@@ -15,6 +15,7 @@ public:
 	void initializer(int row, int col);
 	void resetIndex();
 	const sf::Vector2f getTileSize() const;
+	const sf::Event pollEvent();
 	
 	void draw(const sf::RectangleShape& rectangle);
 	void draw(const sf::Text& text);

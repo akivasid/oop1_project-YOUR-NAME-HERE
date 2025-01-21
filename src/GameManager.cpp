@@ -20,8 +20,21 @@ void GameManager::runGame()
 	Player player(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize());
 
 
-	while (true)
+	while (m_gameWindow.isOpen())
 	{
+		sf::Event event = m_gameWindow.pollEvent();
+		
+
+		switch (event.type)
+		{
+		case sf::Event::Closed:
+			m_gameWindow.close();
+			break;
+		}
+
+		player.move();
+			
+		
 		m_gameWindow.clear();
 		m_gameInfo.updateOutput();
 		m_gameWindow.draw(m_gameInfo.getInfoRec());
