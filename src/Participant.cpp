@@ -12,11 +12,16 @@ Participant::Participant(const sf::Vector2f& location, const sf::Vector2f& wante
 
 //================================== public functions =====================================
 
-sf::Sprite Participant::getParticipantSprite()
+sf::Sprite Participant::getParticipantSprite() const
 {
 	return m_picture;
 }
 
+
+sf::Vector2f Participant::getLocation() const
+{
+	return m_location;
+}
 
 //================================== private functions =====================================
 
@@ -51,3 +56,4 @@ void Participant::pictureArrangement(const sf::Vector2f& wantedSize)
 		break;
 	}
 }
+

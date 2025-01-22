@@ -9,7 +9,9 @@ public:
 	Player(const sf::Vector2f& location, const sf::Vector2f& wantedSize);
 
 	//public functions
-	void move();
+	const sf::Vector2f getDirection() const override;
+	void move(const sf::Vector2f& newLoc) override;
+	const sf::Vector2f getNewLocation(const sf::Vector2f& direction, const float& seconds) const override;
 
 
 private:

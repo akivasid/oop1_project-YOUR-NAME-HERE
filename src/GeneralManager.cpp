@@ -17,7 +17,5 @@ void GeneralManager::runProgram()
 	{
 		GameManager game;
 		game.runGame();
-		int y;
-		std::cin >> y;
 	}
 }
