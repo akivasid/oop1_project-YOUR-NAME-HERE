@@ -25,24 +25,32 @@ void GameWindow::initializer(int row, int col)
 
 sf::Vector2f GameWindow::getTopLeft(const sf::Vector2f& newLocation) const
 {
-	if (newLocation.x > GameWindowConsts::GAME_SIZE.x || newLocation.x < 0
-		|| newLocation.y > GameWindowConsts::GAME_SIZE.y || newLocation.y < 0)
-		return sf::Vector2f(-1, -1);
+	
+	if (!inArea(newLocation))
+		return sf::Vector2f(-1.f, -1.f);
 
 	int row = static_cast <int> (newLocation.y / m_tileSize.y);
 	int col = static_cast <int> (newLocation.x / m_tileSize.x);
+	
 	return m_boardIndex[row][col];
 }
 
 sf::Vector2f GameWindow::getNextTopLeft(const sf::Vector2f& location, const sf::Vector2f& direction) const
 {
-	if (direction.x < 0.f || direction.y < 0.f)
-		return getTopLeft(location);
+	sf::Vector2f newTopLeft;
+	if (direction == MovementConsts::DIRECTION_UP)
+		newTopLeft = sf::Vector2f(location.x, location.y - 4.f);
+	else if (direction == MovementConsts::DIRECTION_DOWN)
+		newTopLeft = sf::Vector2f(location.x, location.y + m_tileSize.y);
+	else if (direction == MovementConsts::DIRECTION_LEFT)
+		newTopLeft = sf::Vector2f(location.x - 4.f, location.y);
+	else if(direction == MovementConsts::DIRECTION_RIGHT)
+		newTopLeft = sf::Vector2f(location.x + m_tileSize.x, location.y);
 	
-	if(direction.x > 0.f)
-		return getTopLeft(sf::Vector2f(location.x + m_tileSize.x, location.y));
+	if (inArea(getTopLeft(newTopLeft)))// checking exception
+		return getTopLeft(newTopLeft);
 	
-	return getTopLeft(sf::Vector2f(location.x, location.y + m_tileSize.y));
+	return getTopLeft(location);
 }
 
 
@@ -88,8 +96,8 @@ void GameWindow::draw(const sf::Sprite& picture)
 
 bool GameWindow::inArea(const sf::Vector2f& newLocation) const
 {
-	if (newLocation.x >= 0 && newLocation.x < GameWindowConsts::GAME_SIZE.x - m_tileSize.x &&
-		newLocation.y >= 0 && newLocation.y < GameWindowConsts::GAME_SIZE.y - m_tileSize.y)
+	if (newLocation.x >= 0 && newLocation.x <= GameWindowConsts::GAME_SIZE.x - m_tileSize.x &&//ma
+		newLocation.y >= 0 && newLocation.y <= GameWindowConsts::GAME_SIZE.y - m_tileSize.y)
 		return true;
 	return false;
 }

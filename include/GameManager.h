@@ -3,6 +3,7 @@
 #include "GameWindow.h"
 #include "GameInformation.h"
 #include "Player.h"
+#include "Guard.h"
 
 
 

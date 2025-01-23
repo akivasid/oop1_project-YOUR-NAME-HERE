@@ -13,7 +13,10 @@ void GameManager::runGame()
 	setLevel();
 
 	m_dynamic.push_back(std::make_unique <Player>(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize()));
+	//m_dynamic.push_back(std::make_unique <Player>(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize()));
+	//m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(100, 500)), m_gameWindow.getTileSize()));
 	//player(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize());//get out of here
+	
 
 	handleEvents();
 }
@@ -39,33 +42,13 @@ void GameManager::handleEvents()
 
 void GameManager::handleMovement(sf::Clock& clock)
 {
-	
-	sf::Vector2f direction = m_dynamic[0]->getDirection();
-
-	sf::Vector2f newLoc(m_dynamic[0]->getNewLocation(direction, clock.getElapsedTime().asSeconds()));
-	//sf::Vector2f oldLoc = m_dynamic[0]->getLocation();
-
-	if (m_gameWindow.inArea(newLoc))
+	for(int i=0; i<m_dynamic.size(); i++)
 	{
-		m_dynamic[0]->move(newLoc);
-		
-		//sf::Vector2f direction(newLoc - oldLoc);//getting direction: up/down/right/left/in_place
-		//if (newLoc == m_dynamic[0]->getMovement())//checking if movement stopped
-		//	takeToTopLeft(direction, 0 /*index*/);
+		sf::Vector2f direction = m_dynamic[i]->getWantedDirection();
+		if (direction != MovementConsts::NO_DIRECTION)
+			takeToTopLeft(m_dynamic[i]->getDirection(), i);//the easyer way is to see if there is no press move to top left
 	}
-	
 	clock.restart();
-
-
-	sf::Vector2f newDirection(m_dynamic[0]->getDirection());
-	if (newDirection == sf::Vector2f(0.f, 0.f) && direction != sf::Vector2f(0.f, 0.f))
-	{
-		takeToTopLeft(direction, 0);
-	}
-
-	
-	
-
 }
 //============================================ private functions ==================================
 
@@ -92,15 +75,18 @@ void GameManager::takeToTopLeft(const sf::Vector2f& direction, int index)
 	sf::Vector2f wantedTopLeft(m_gameWindow.getNextTopLeft(curLoc, direction));
 	sf::Clock clock;
 
-	while(wantedTopLeft != curLoc)
-	{
-		sf::Vector2f newLoc(m_dynamic[0]->getNewLocation(direction, clock.getElapsedTime().asSeconds()));
-		m_dynamic[index]->move(newLoc);//placing in right place
-		clock.restart();
-		curLoc = m_dynamic[index]->getLocation();//getting current location in order to add it to direction
-		updateWindow();
-	}
+	
+	m_dynamic[index]->move(m_dynamic[index]->getNewLocation(direction, clock.getElapsedTime().asSeconds()));//placing in right place
+	clock.restart();
+	curLoc = m_dynamic[index]->getLocation();//getting current location in order to add it to direction
+	updateWindow();
 
+	if ((curLoc.x - wantedTopLeft.x < 3 && curLoc.x - wantedTopLeft.x > -3) &&
+		(curLoc.y - wantedTopLeft.y < 3 && curLoc.y - wantedTopLeft.y > -3))
+	{
+		m_dynamic[index]->move(wantedTopLeft);
+		m_dynamic[index]->resetDirection();
+	}
 }
 
 void GameManager::updateWindow()
@@ -109,6 +95,7 @@ void GameManager::updateWindow()
 	m_gameInfo.updateOutput();
 	m_gameWindow.draw(m_gameInfo.getInfoRec());
 	m_gameWindow.draw(m_gameInfo.getInfoOutput());
-	m_gameWindow.draw(m_dynamic[0]->getParticipantSprite());
+	for(int i=0; i<m_dynamic.size(); i++)
+		m_gameWindow.draw(m_dynamic[i]->getParticipantSprite());
 	m_gameWindow.display();
 }

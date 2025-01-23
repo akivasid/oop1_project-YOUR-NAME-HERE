@@ -16,7 +16,9 @@ public:
 	//public
 	sf::Sprite getParticipantSprite() const;
 	sf::Vector2f getLocation() const;
+	virtual const sf::Vector2f getWantedDirection() = 0;
 	virtual const sf::Vector2f getDirection() const = 0;
+	virtual void resetDirection() = 0;
 	virtual void move(const sf::Vector2f& newLoc) = 0;
 	virtual const sf::Vector2f getNewLocation(const sf::Vector2f& direction, const float& seconds) const = 0;
 

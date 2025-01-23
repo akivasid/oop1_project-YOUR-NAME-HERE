@@ -2,6 +2,9 @@
 #include <vector>
 #include "BasicWindow.h"
 #include "GameWindowConsts.h"
+#include "MovementConsts.h"
+
+#include <iostream>
 
 
 class GameWindow : public BasicWindow
