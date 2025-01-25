@@ -8,53 +8,53 @@ Player::Player(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 
 //===================================== public functions =================================
 
-const sf::Vector2f Player::getWantedDirection()
+bool Player::gotToTopLeft() const
+{
+	return m_curLocation == m_topLeft;
+}
+
+
+const sf::Vector2f Player::getWantedDirection() const
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		m_direction = sf::Vector2f(1.f, 0.f);
-		return m_direction;
-	}
+		return MovementConsts::DIRECTION_RIGHT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		m_direction = sf::Vector2f(-1.f, 0.f);
-		return m_direction;
-	}
+		return MovementConsts::DIRECTION_LEFT;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		m_direction = sf::Vector2f(0.f, -1.f);
-		return m_direction;
-	}
+		return MovementConsts::DIRECTION_UP;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		return MovementConsts::DIRECTION_DOWN;
+	return MovementConsts::NO_DIRECTION;
+}
+
+
+void Player::updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
+{
+	m_topLeft = newTopLeft;
+	m_direction = newDirection;
+}
+
+
+
+void Player::move(const float& seconds)
+{
+	if ((m_curLocation.x - m_topLeft.x < 3 && m_curLocation.x - m_topLeft.x > -3) &&
+		(m_curLocation.y - m_topLeft.y < 3 && m_curLocation.y - m_topLeft.y > -3))
 	{
-		m_direction = sf::Vector2f(0.f, 1.f);
-		return m_direction;
-	}
-	return sf::Vector2f(0.f, 0.f);
-}
-
-
-
-void Player::move(const sf::Vector2f& newLoc)
-{
-	if (newLoc == m_location)
+		m_curLocation = m_topLeft;
+		m_direction = MovementConsts::NO_DIRECTION;
+		m_picture.setPosition(m_topLeft);
 		return;
-	m_picture.setPosition(newLoc);
-	m_location = newLoc;
+	}
+
+	m_curLocation = getNewLocation(seconds);
+	m_picture.setPosition(m_curLocation);
 }
 
-const sf::Vector2f Player::getNewLocation(const sf::Vector2f& direction, const float& seconds) const
+
+sf::Vector2f Player::getNewLocation(const float& seconds) const
 {
-	return sf::Vector2f(m_location.x + direction.x * seconds * MovementConsts::PIXEL_PER_SECOND,
-		m_location.y + direction.y * seconds * MovementConsts::PIXEL_PER_SECOND);
+	return sf::Vector2f(m_curLocation.x + m_direction.x * seconds * MovementConsts::PIXEL_PER_SECOND,
+		m_curLocation.y + m_direction.y * seconds * MovementConsts::PIXEL_PER_SECOND);
 }
 
-const sf::Vector2f Player::getDirection() const
-{
-	return m_direction;
-}
-
-void Player::resetDirection()
-{
-	m_direction = sf::Vector2f(0.f, 0.f);
-}

@@ -15,18 +15,19 @@ public:
 
 	//public
 	sf::Sprite getParticipantSprite() const;
-	sf::Vector2f getLocation() const;
-	virtual const sf::Vector2f getWantedDirection() = 0;
-	virtual const sf::Vector2f getDirection() const = 0;
-	virtual void resetDirection() = 0;
-	virtual void move(const sf::Vector2f& newLoc) = 0;
-	virtual const sf::Vector2f getNewLocation(const sf::Vector2f& direction, const float& seconds) const = 0;
+	sf::Vector2f getTopLeft() const;
+
+	virtual bool gotToTopLeft() const = 0;
+	virtual const sf::Vector2f getWantedDirection() const = 0;
+	virtual void updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection) = 0;
+	virtual void move(const float& seconds) = 0;
+	
 
 
 
 protected:
 	//members
-	sf::Vector2f m_location;
+	sf::Vector2f m_topLeft;
 	sf::Sprite m_picture;
 	ParticipantType m_type;
 

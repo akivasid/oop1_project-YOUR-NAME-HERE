@@ -37,20 +37,23 @@ sf::Vector2f GameWindow::getTopLeft(const sf::Vector2f& newLocation) const
 
 sf::Vector2f GameWindow::getNextTopLeft(const sf::Vector2f& location, const sf::Vector2f& direction) const
 {
-	sf::Vector2f newTopLeft;
+	if (direction == MovementConsts::NO_DIRECTION)
+		return location;
+	
+	sf::Vector2f newLoc = location;
 	if (direction == MovementConsts::DIRECTION_UP)
-		newTopLeft = sf::Vector2f(location.x, location.y - 4.f);
-	else if (direction == MovementConsts::DIRECTION_DOWN)
-		newTopLeft = sf::Vector2f(location.x, location.y + m_tileSize.y);
+		newLoc = sf::Vector2f(location.x, location.y - m_tileSize.y);
+	else if(direction == MovementConsts::DIRECTION_DOWN)
+		newLoc = sf::Vector2f(location.x, location.y + m_tileSize.y);
+	else if (direction == MovementConsts::DIRECTION_RIGHT)
+		newLoc = sf::Vector2f(location.x + m_tileSize.x, location.y);
 	else if (direction == MovementConsts::DIRECTION_LEFT)
-		newTopLeft = sf::Vector2f(location.x - 4.f, location.y);
-	else if(direction == MovementConsts::DIRECTION_RIGHT)
-		newTopLeft = sf::Vector2f(location.x + m_tileSize.x, location.y);
+		newLoc = sf::Vector2f(location.x - m_tileSize.x, location.y);
+
+	if (inArea(newLoc))
+		return newLoc;
 	
-	if (inArea(getTopLeft(newTopLeft)))// checking exception
-		return getTopLeft(newTopLeft);
-	
-	return getTopLeft(location);
+	return location;
 }
 
 
