@@ -79,6 +79,8 @@ void GameManager::setLevel()
 	m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(100.f,900.f)), m_gameWindow.getTileSize()));
 	m_static.push_back(std::make_unique <Wall>(m_gameWindow.getTopLeft(sf::Vector2f(0.f, 0.f)), m_gameWindow.getTileSize()));
 	m_static.push_back(std::make_unique <Wall>(m_gameWindow.getTopLeft(sf::Vector2f(342.f, 654.f)), m_gameWindow.getTileSize()));
+	m_static.push_back(std::make_unique <Rock>(m_gameWindow.getTopLeft(sf::Vector2f(0, 300.f)), m_gameWindow.getTileSize()));
+	m_static.push_back(std::make_unique <Rock>(m_gameWindow.getTopLeft(sf::Vector2f(900.f, 0)), m_gameWindow.getTileSize()));
 
 }
 

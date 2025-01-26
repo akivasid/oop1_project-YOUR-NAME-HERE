@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Guard.h"
 #include "Wall.h"
+#include "Rock.h"
 
 
 
