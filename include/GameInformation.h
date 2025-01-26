@@ -22,7 +22,7 @@ private:
 	unsigned m_level;
 	unsigned m_life;
 	unsigned m_score;
-	unsigned m_possiblePoinst;
+	unsigned m_possiblePoints;
 
 	sf::RectangleShape m_rectangle;
 	sf::Text m_text;

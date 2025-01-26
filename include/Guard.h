@@ -9,13 +9,11 @@ public:
 	Guard(const sf::Vector2f& location, const sf::Vector2f& wantedSize);
 
 	//public functions
-	bool gotToTopLeft() const override;
-	const sf::Vector2f getWantedDirection() const override;
-	void updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection) override;
-	void move(const float& seconds) override;
+	sf::Vector2f getWantedDirection() const override;
 
-
+	void handleCollision(GameInformation& m_gameInfo, sf::Vector2f& newTopLeft,
+		sf::Vector2f& newDirection, Participant& obj) override;
+	
 private:
 
-	sf::Vector2f getNewLocation(const float& seconds) const;
 };

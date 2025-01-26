@@ -2,6 +2,7 @@
 #include "Images.h"
 #include "ParticipantType.h"
 #include "MovementConsts.h"
+#include "GameInformation.h"
 
 
 
@@ -17,13 +18,9 @@ public:
 	sf::Sprite getParticipantSprite() const;
 	sf::Vector2f getTopLeft() const;
 
-	virtual bool gotToTopLeft() const = 0;
-	virtual const sf::Vector2f getWantedDirection() const = 0;
-	virtual void updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection) = 0;
-	virtual void move(const float& seconds) = 0;
+	virtual void handleCollision(GameInformation& m_gameInfo, sf::Vector2f& newTopLeft,
+									sf::Vector2f& newDirection, Participant& obj) = 0;
 	
-
-
 
 protected:
 	//members

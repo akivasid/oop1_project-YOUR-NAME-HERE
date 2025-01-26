@@ -11,14 +11,21 @@ public:
 	virtual ~DynamicParticipant() = default;
 
 	//public functions
-	virtual bool gotToTopLeft() const = 0;
-	virtual const sf::Vector2f getWantedDirection() const = 0;
-	virtual void updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection) = 0;
-	virtual void move(const float& seconds) = 0;
+	bool gotToTopLeft() const;
+	void move(const float& seconds);
+	virtual sf::Vector2f getWantedDirection() const = 0;
+	void updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection);
+	
 	 
 
 
 protected:
+	//members
 	sf::Vector2f m_curLocation;
 	sf::Vector2f m_direction;
+	sf::Clock m_clock;
+	
+	//private functions
+	sf::Vector2f getNewLocation(const float& seconds) const;
+	
 };

@@ -18,7 +18,7 @@ public:
 	sf::Vector2f getNextTopLeft(const sf::Vector2f& location, const sf::Vector2f& direction) const;
 	
 	void initializer(int row, int col);
-	void resetIndex();
+	
 	const sf::Vector2f getTileSize() const;
 	const sf::Event pollEvent();
 	bool inArea(const sf::Vector2f& newLocation) const;
@@ -34,4 +34,7 @@ private:
 	int m_cols;
 	sf::Vector2f m_tileSize;
 	std::vector <std::vector <sf::Vector2f>> m_boardIndex;
+
+	//private functions
+	void resetIndex();
 };

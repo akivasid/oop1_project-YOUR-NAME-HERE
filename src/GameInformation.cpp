@@ -4,7 +4,7 @@
 
 GameInformation::GameInformation()
 	:m_level(0), m_rectangle(GameInfoConsts::INFO_SIZE), m_text(FontHolder::getText()), m_score(0),
-	m_clock(), m_countDown(), m_life(0), m_possiblePoinst(0)
+	m_clock(), m_countDown(), m_life(0), m_possiblePoints(0)
 {
 	m_rectangle.setPosition(GameInfoConsts::INFO_LOCATION);
 	m_rectangle.setFillColor(GameInfoConsts::INFO_COLOR);
@@ -18,7 +18,7 @@ void GameInformation::initializer(int guards)
 {
 	m_level++;
 	m_life = GameInfoConsts::LIFE;
-	m_possiblePoinst = GameInfoConsts::END_LEVEL + GameInfoConsts::LEVEL_GUARD * guards;
+	m_possiblePoints = GameInfoConsts::END_LEVEL + GameInfoConsts::LEVEL_GUARD * guards;
 	m_clock.restart();
 	m_countDown = GameInfoConsts::LEVEL_TIME;
 	updateOutput();

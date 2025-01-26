@@ -11,14 +11,6 @@ GameManager::GameManager()
 void GameManager::runGame()
 {
 	setLevel();
-
-	m_dynamic.push_back(std::make_unique <Player>(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize()));
-	//m_dynamic.push_back(std::make_unique <Player>(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize()));
-	m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(100, 500)), m_gameWindow.getTileSize()));
-	m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(450, 500)), m_gameWindow.getTileSize()));
-	//player(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize());//get out of here
-	
-
 	handleEvents();
 }
 
@@ -48,14 +40,28 @@ void GameManager::handleMovement(sf::Clock& clock)
 		if (m_dynamic[i]->gotToTopLeft())
 		{
 			sf::Vector2f newDirection = m_dynamic[i]->getWantedDirection();
-			sf::Vector2f newTopLeft = m_gameWindow.getNextTopLeft(m_dynamic[i]->getTopLeft(), newDirection);//check function
+			if (newDirection == MovementConsts::NO_DIRECTION)
+				continue;
+			sf::Vector2f newTopLeft = m_gameWindow.getNextTopLeft(m_dynamic[i]->getTopLeft(), newDirection);
+			
+			/*for (int j = 0; j < m_dynamic.size(); j++)
+			{
+				if (i != j)
+					m_dynamic[i]->handleCollision(m_gameInfo, newTopLeft, newDirection, *m_dynamic[j]);
+			}*/
+
+			for(int k=0; k<m_static.size(); k++)
+				m_dynamic[i]->handleCollision(m_gameInfo, newTopLeft, newDirection, *m_static[k]);
+
 			m_dynamic[i]->updateMovement(newTopLeft, newDirection);
 		}
 
+		
 		m_dynamic[i]->move(clock.getElapsedTime().asSeconds());
 	}
 	clock.restart();
 }
+
 //============================================ private functions ==================================
 
 void GameManager::setLevel()
@@ -64,14 +70,23 @@ void GameManager::setLevel()
 	readFile(row, col, guards);
 	m_gameInfo.initializer(guards);
 	m_gameWindow.initializer(row, col);
-	//get the participants vector
+	
+	//m_dynamic.push_back(std::make_unique <Player>(m_gameWindow.getTopLeft(sf::Vector2f(150, 50)), m_gameWindow.getTileSize()));
+	m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(982.f, 350.f)), m_gameWindow.getTileSize()));
+	m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(950.f, 550.f)), m_gameWindow.getTileSize()));
+	m_dynamic.push_back(std::make_unique <Player>(m_gameWindow.getTopLeft(sf::Vector2f(150.f, 50.f)), m_gameWindow.getTileSize()));
+	m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(999.f,999.f)), m_gameWindow.getTileSize()));
+	m_dynamic.push_back(std::make_unique <Guard>(m_gameWindow.getTopLeft(sf::Vector2f(100.f,900.f)), m_gameWindow.getTileSize()));
+	m_static.push_back(std::make_unique <Wall>(m_gameWindow.getTopLeft(sf::Vector2f(0.f, 0.f)), m_gameWindow.getTileSize()));
+	m_static.push_back(std::make_unique <Wall>(m_gameWindow.getTopLeft(sf::Vector2f(342.f, 654.f)), m_gameWindow.getTileSize()));
+
 }
 
 void GameManager::readFile(int& row, int& col, int& guards)
 {
 	//read file/playlist
-	row = 20;
-	col = 20;
+	row = 14;
+	col = 14;
 	guards = 0;
 }
 
@@ -83,5 +98,7 @@ void GameManager::updateWindow()
 	m_gameWindow.draw(m_gameInfo.getInfoOutput());
 	for(int i=0; i<m_dynamic.size(); i++)
 		m_gameWindow.draw(m_dynamic[i]->getParticipantSprite());
+	for (int i = 0; i < m_static.size(); i++)
+		m_gameWindow.draw(m_static[i]->getParticipantSprite());
 	m_gameWindow.display();
 }
