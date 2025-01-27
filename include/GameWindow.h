@@ -14,6 +14,7 @@ public:
 	GameWindow();
 
 	//public functions
+	sf::Vector2f getLocationByIndex(const int row, const int col);
 	sf::Vector2f getTopLeft(const sf::Vector2f& newLocation) const;
 	sf::Vector2f getNextTopLeft(const sf::Vector2f& location, const sf::Vector2f& direction) const;
 	

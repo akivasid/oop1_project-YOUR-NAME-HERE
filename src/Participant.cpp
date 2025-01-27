@@ -12,6 +12,11 @@ Participant::Participant(const sf::Vector2f& location, const sf::Vector2f& wante
 
 //================================== public functions =====================================
 
+const ParticipantType Participant::getType() const
+{
+	return m_type;
+}
+
 sf::Sprite Participant::getParticipantSprite() const
 {
 	return m_picture;

@@ -17,6 +17,7 @@ public:
 	//public
 	sf::Sprite getParticipantSprite() const;
 	sf::Vector2f getTopLeft() const;
+	const ParticipantType getType() const;
 
 	virtual void handleCollision(GameInformation& m_gameInfo, sf::Vector2f& newTopLeft,
 									sf::Vector2f& newDirection, Participant& obj) = 0;

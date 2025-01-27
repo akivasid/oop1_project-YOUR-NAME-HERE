@@ -1,9 +1,13 @@
 #pragma once
 #include <memory>
+#include <fstream>
+#include <string>
+#include "ParticipantsCharId.h"
 #include "GameWindow.h"
 #include "GameInformation.h"
 #include "Player.h"
-#include "Guard.h"
+#include "DumbGuard.h"
+#include "SmartGuard.h"
 #include "Wall.h"
 #include "Rock.h"
 
@@ -27,8 +31,9 @@ private:
 	std::vector <std::unique_ptr <StaticParticipant> > m_static;
 	
 	//private functions
-	void readFile(int& row, int& col, int& guards);
-	void setLevel();
+	void setLevel(const std::string& nameLevel);
+	void readFile(int& row, int& col, const std::string& nameLevel);
+	void updateObjects(const std::string& nameLevel, int& guards);
 	void handleEvents();
 	void handleMovement(sf::Clock& clock);
 	void updateWindow();

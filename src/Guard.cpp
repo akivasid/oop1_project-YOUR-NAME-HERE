@@ -8,19 +8,27 @@ Guard::Guard(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 
 //===================================== public functions =============================
 
-
-sf::Vector2f Guard::getWantedDirection() const
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		return MovementConsts::DIRECTION_RIGHT;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		return MovementConsts::DIRECTION_LEFT;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		return MovementConsts::DIRECTION_UP;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		return MovementConsts::DIRECTION_DOWN;
-	return MovementConsts::NO_DIRECTION;
-}
+//
+//sf::Vector2f Guard::getWantedDirection() const
+//{
+//	int directionRando = std::rand() % 4;
+//	switch (directionRando)
+//	{
+//	case  0:
+//		return MovementConsts::DIRECTION_RIGHT;
+//		break;
+//	case 1:
+//		return MovementConsts::DIRECTION_LEFT;
+//		break;
+//	case 2:
+//		return MovementConsts::DIRECTION_UP;
+//		break;
+//	case 3:
+//		return MovementConsts::DIRECTION_DOWN;
+//		break;
+//	}
+//	return MovementConsts::NO_DIRECTION;	
+//}
 
 
 void Guard::handleCollision(GameInformation& m_gameInfo, sf::Vector2f& newTopLeft,

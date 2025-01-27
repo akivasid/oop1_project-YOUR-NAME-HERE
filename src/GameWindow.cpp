@@ -22,6 +22,11 @@ void GameWindow::initializer(int row, int col)
 	resetIndex();
 }
 
+sf::Vector2f GameWindow::getLocationByIndex(const int row, const int col)
+{
+	return m_boardIndex[row][col];
+}
+
 
 sf::Vector2f GameWindow::getTopLeft(const sf::Vector2f& newLocation) const
 {

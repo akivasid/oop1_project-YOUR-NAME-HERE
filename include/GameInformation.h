@@ -15,6 +15,8 @@ public:
 	const sf::Text& getInfoOutput() const;
 	bool timeEnded() const;
 	void updateCountDown();
+	void setPlayerLocation(const sf::Vector2f& newLocation);
+	sf::Vector2f getPlayerLocation() const;
 
 
 private:
@@ -28,5 +30,6 @@ private:
 	sf::Text m_text;
 	sf::Clock m_clock;
 	sf::Time m_countDown;
+	sf::Vector2f m_playerLocation;
 };
 

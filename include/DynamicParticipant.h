@@ -16,7 +16,6 @@ public:
 	virtual sf::Vector2f getWantedDirection() const = 0;
 	void updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection);
 	
-	 
 
 
 protected:

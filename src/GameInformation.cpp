@@ -62,3 +62,14 @@ bool GameInformation::timeEnded() const
 		return true;
 	return false;
 }
+
+void GameInformation::setPlayerLocation(const sf::Vector2f& newLocation)
+{
+	m_playerLocation = newLocation;
+}
+
+
+sf::Vector2f GameInformation::getPlayerLocation() const
+{
+	return m_playerLocation;
+}

@@ -29,7 +29,7 @@ void Player::handleCollision(GameInformation& m_gameInfo, sf::Vector2f& newTopLe
 {
 	
 	obj.handleCollision(m_gameInfo, newTopLeft, newDirection, *this);
-	
+	m_gameInfo.setPlayerLocation(newTopLeft);
 	//std::cout << obj.getTopLeft().x << ',' << obj.getTopLeft().y << '\n' << newTopLeft.x << ',' << newTopLeft.y << '\n';
 	
 	
