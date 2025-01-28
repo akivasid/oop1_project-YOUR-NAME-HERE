@@ -17,7 +17,7 @@ private:
 	//members
 	static std::vector <sf::Texture> m_pictures;
 	
-	//private funcdtions
+	//private functions
 	static void loadPlayer();
 	static void loadGuard();
 	static void loadWall();

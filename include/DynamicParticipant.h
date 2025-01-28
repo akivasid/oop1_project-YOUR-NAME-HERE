@@ -12,9 +12,11 @@ public:
 
 	//public functions
 	bool gotToTopLeft() const;
+	sf::Vector2f getDirection() const;
+	void setDirection(const sf::Vector2f& newDirection);
 	void move(const float& seconds);
-	virtual sf::Vector2f getWantedDirection() const = 0;
-	void updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection);
+	virtual void finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection) = 0;
+	virtual void updateMovement(GameWindow& gameWindow, GameInformation& gameInfo, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
 	
 
 

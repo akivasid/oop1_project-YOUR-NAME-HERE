@@ -8,7 +8,16 @@ Player::Player(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 
 //===================================== public functions =================================
 
-
+void Player::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+{
+	newDirection = getWantedDirection();
+	newTopLeft = gameWindow.getNextTopLeft(m_topLeft, newDirection);
+	if (!gameWindow.inArea(newTopLeft))
+	{
+		newDirection = MovementConsts::NO_DIRECTION;
+		newTopLeft = m_topLeft;
+	}
+}
 
 
 sf::Vector2f Player::getWantedDirection() const
@@ -24,17 +33,24 @@ sf::Vector2f Player::getWantedDirection() const
 	return MovementConsts::NO_DIRECTION;
 }
 
-void Player::handleCollision(GameInformation& m_gameInfo, sf::Vector2f& newTopLeft,
-							sf::Vector2f& newDirection, Participant& obj)
+void Player::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, Participant& obj,
+							sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
 {
 	
-	obj.handleCollision(m_gameInfo, newTopLeft, newDirection, *this);
-	m_gameInfo.setPlayerLocation(newTopLeft);
-	//std::cout << obj.getTopLeft().x << ',' << obj.getTopLeft().y << '\n' << newTopLeft.x << ',' << newTopLeft.y << '\n';
-	
-	
+	obj.handleCollision(gameWindow, gameInfo, *this, newDirection, newTopLeft);
 
-	//std::cout << obj.getTopLeft().x << ',' << obj.getTopLeft().y << '\n' << newTopLeft.x << ',' << newTopLeft.y << '\n';
-	//obj.handleCollision(m_gameInfo, newTopLeft, newDirection, *this);
+
+	gameInfo.setPlayerLocation(gameWindow.getNextTopLeft(m_topLeft,newDirection));
+	
 }
 
+
+void Player::finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
+{
+	m_topLeft = newTopLeft;
+	m_direction = newDirection;
+}
+
+void Player::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, SmartGuard& guard,
+	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
+{}

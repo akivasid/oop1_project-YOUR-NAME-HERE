@@ -46,24 +46,22 @@ void GameManager::handleMovement(sf::Clock& clock)
 	{
 		if (m_dynamic[i]->gotToTopLeft())
 		{
-			sf::Vector2f newDirection = m_dynamic[i]->getWantedDirection(/*m_gameInfo.getPlayerLocation()*/);
-			if (newDirection == MovementConsts::NO_DIRECTION)
-				continue;
-			sf::Vector2f newTopLeft = m_gameWindow.getNextTopLeft(m_dynamic[i]->getTopLeft(), newDirection);
-			
 			/*for (int j = 0; j < m_dynamic.size(); j++)
 			{
 				if (i != j)
 					m_dynamic[i]->handleCollision(m_gameInfo, newTopLeft, newDirection, *m_dynamic[j]);
 			}*/
+			sf::Vector2f newDirection(MovementConsts::NO_DIRECTION);
+			sf::Vector2f newTopLeft(m_gameWindow.getNextTopLeft(m_dynamic[i]->getTopLeft(), newDirection));
+			m_dynamic[i]->updateMovement(m_gameWindow, m_gameInfo,  newDirection, newTopLeft);
+			if(newDirection != MovementConsts::NO_DIRECTION)
+			{
+				for (int k = 0; k < m_static.size(); k++)
+					m_dynamic[i]->handleCollision(m_gameWindow, m_gameInfo, *m_static[k], newDirection, newTopLeft);
 
-			for(int k=0; k<m_static.size(); k++)
-				m_dynamic[i]->handleCollision(m_gameInfo, newTopLeft, newDirection, *m_static[k]);
+				m_dynamic[i]->finalMovement(newTopLeft, newDirection);
+			}
 
-			m_dynamic[i]->updateMovement(newTopLeft, newDirection);
-
-			/*if (m_dynamic[i]->getType() == ParticipantType::Player)
-				m_gameInfo.setPlayerLocation(newTopLeft);*/
 		}
 
 		m_dynamic[i]->move(clock.getElapsedTime().asSeconds());

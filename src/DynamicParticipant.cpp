@@ -4,17 +4,24 @@ DynamicParticipant::DynamicParticipant(const sf::Vector2f& location, const sf::V
 	:Participant(location, wantedSize, type), m_direction(0.f, 0.f), m_curLocation(location), m_clock()
 {}
 
+
+sf::Vector2f DynamicParticipant::getDirection() const
+{
+	return m_direction;
+}
+
+
+void DynamicParticipant::setDirection(const sf::Vector2f& newDirection)
+{
+	m_direction = newDirection;
+}
+
+
 bool DynamicParticipant::gotToTopLeft() const
 {
 	return m_curLocation == m_topLeft;
 }
 
-
-void DynamicParticipant::updateMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
-{
-	m_topLeft = newTopLeft;
-	m_direction = newDirection;
-}
 
 
 

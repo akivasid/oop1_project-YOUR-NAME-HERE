@@ -4,7 +4,7 @@
 //================================== constructor =====================================
 
 Participant::Participant(const sf::Vector2f& location, const sf::Vector2f& wantedSize, const ParticipantType& type)
-	:m_topLeft(location), m_type(type)
+	:m_topLeft(location), m_type(type), m_objectState(true)
 {
 	pictureArrangement(wantedSize);
 	m_picture.setPosition(m_topLeft);

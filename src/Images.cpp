@@ -14,7 +14,7 @@ void Images::loadAllTextures()
 }
 
 
-sf::Sprite Images::getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize)//remeber to check for memory exception
+sf::Sprite Images::getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize)//check for memory exception
 {
 	int index = static_cast<int>(type);
 	

@@ -3,7 +3,13 @@
 #include "ParticipantType.h"
 #include "MovementConsts.h"
 #include "GameInformation.h"
+#include "GameWindow.h"
 
+class SmartGuard;
+class DumbGuard;
+class Player;
+class Rock;
+class Wall;
 
 
 class Participant
@@ -19,14 +25,18 @@ public:
 	sf::Vector2f getTopLeft() const;
 	const ParticipantType getType() const;
 
-	virtual void handleCollision(GameInformation& m_gameInfo, sf::Vector2f& newTopLeft,
-									sf::Vector2f& newDirection, Participant& obj) = 0;
+	
+	virtual void handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, Participant& obj,
+								sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
+	virtual void handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, SmartGuard& guard,
+								sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
 	
 
 protected:
 	//members
 	sf::Vector2f m_topLeft;
 	sf::Sprite m_picture;
+	bool m_objectState;
 	ParticipantType m_type;
 
 	//public functions
