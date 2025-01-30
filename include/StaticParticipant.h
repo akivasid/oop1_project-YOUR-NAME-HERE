@@ -1,5 +1,8 @@
 #pragma once
 #include "Participant.h"
+#include "Player.h"
+#include "SmartGuard.h"
+#include "DumbGuard.h"
 
 
 class StaticParticipant : public Participant

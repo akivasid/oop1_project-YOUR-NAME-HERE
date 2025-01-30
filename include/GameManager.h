@@ -10,6 +10,7 @@
 #include "SmartGuard.h"
 #include "Wall.h"
 #include "Rock.h"
+#include "Door.h"
 
 
 
@@ -36,5 +37,8 @@ private:
 	void updateObjects(const std::string& nameLevel, int& guards);
 	void handleEvents();
 	void handleMovement(sf::Clock& clock);
+	void manageCollisions(sf::Vector2f& newDirection, sf::Vector2f& newTopLeft, const int i);
+	void manageFirstLocations();
 	void updateWindow();
+	void clearObjects();
 };

@@ -21,15 +21,15 @@ public:
 	virtual ~Participant() = default;
 
 	//public
-	sf::Sprite getParticipantSprite() const;
 	sf::Vector2f getTopLeft() const;
 	const ParticipantType getType() const;
+	void draw(GameWindow& gameWindow);
 
 	
-	virtual void handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, Participant& obj,
-								sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
-	virtual void handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, SmartGuard& guard,
-								sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
+	virtual void handleCollision(GameInformation& gameInfo, Participant& obj,sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
+	virtual void handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
+	virtual void handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
+	virtual void handleCollision(GameInformation& gameInfo, Player& player, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
 	
 
 protected:
@@ -41,4 +41,5 @@ protected:
 
 	//public functions
 	void pictureArrangement(const sf::Vector2f& wantedSize);
+	
 };

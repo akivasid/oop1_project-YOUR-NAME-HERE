@@ -17,11 +17,6 @@ const ParticipantType Participant::getType() const
 	return m_type;
 }
 
-sf::Sprite Participant::getParticipantSprite() const
-{
-	return m_picture;
-}
-
 
 sf::Vector2f Participant::getTopLeft() const
 {
@@ -62,3 +57,7 @@ void Participant::pictureArrangement(const sf::Vector2f& wantedSize)
 	}
 }
 
+void Participant::draw(GameWindow& gameWindow)
+{
+	gameWindow.draw(m_picture);
+}

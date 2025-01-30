@@ -7,6 +7,8 @@ enum class ParticipantType
 	Door,
 	Rock,
 	Wall,
+	Bomb,
+	Explasion,
 	GiftKillGuard,
 	GiftAddTime,
 	GiftFreezeGuards,

@@ -1,61 +1,42 @@
 #include "SmartGuard.h"
 
 SmartGuard::SmartGuard(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
-	:Guard(location, wantedSize), m_target(location), m_downIsOpen(1), m_rightIsOpen(1), m_leftIsOpen(1), m_upIsOpen(1)
+	:Guard(location, wantedSize), m_target(location)
 {}
 
 
 sf::Vector2f SmartGuard::getWantedDirection() const
 {
-	if(m_target.x > m_topLeft.x)
-	{
-		if (m_rightIsOpen)
+	if (m_topLeft != m_prevLocation) {
+		if (m_target.x > m_topLeft.x)
 			return MovementConsts::DIRECTION_RIGHT;
-		if (m_upIsOpen)
-			return MovementConsts::DIRECTION_UP;
-		if (m_downIsOpen)
-			return MovementConsts::DIRECTION_DOWN;
-		if (m_leftIsOpen)
+		if (m_target.x < m_topLeft.x)
 			return MovementConsts::DIRECTION_LEFT;
-	}
-
-	else if (m_target.x < m_topLeft.x)
-	{
-		if (m_leftIsOpen)
-			return MovementConsts::DIRECTION_LEFT;
-		if (m_upIsOpen)
+		if (m_target.y < m_topLeft.y)
 			return MovementConsts::DIRECTION_UP;
-		if (m_downIsOpen)
-			return MovementConsts::DIRECTION_DOWN;
-		if (m_rightIsOpen)
-			return MovementConsts::DIRECTION_RIGHT;
-		
-	}
-
-	else if (m_target.y < m_topLeft.y)
-	{
-		if (m_upIsOpen)
-			return MovementConsts::DIRECTION_UP;
-		if (m_rightIsOpen)
-			return MovementConsts::DIRECTION_RIGHT;
-		if (m_leftIsOpen)
-			return MovementConsts::DIRECTION_LEFT;
-		if (m_downIsOpen)
+		if (m_target.y > m_topLeft.y)
 			return MovementConsts::DIRECTION_DOWN;
 	}
 
-	if (m_target.y > m_topLeft.y)
+	else 
 	{
-		if (m_downIsOpen)
-			return MovementConsts::DIRECTION_DOWN;
-		if (m_rightIsOpen)
+		int directionRandom = std::rand() % 4;
+		switch (directionRandom)
+		{
+		case  0:
 			return MovementConsts::DIRECTION_RIGHT;
-		if (m_upIsOpen)
-			return MovementConsts::DIRECTION_UP;
-		if (m_leftIsOpen)
+			break;
+		case 1:
 			return MovementConsts::DIRECTION_LEFT;
+			break;
+		case 2:
+			return MovementConsts::DIRECTION_UP;
+			break;
+		case 3:
+			return MovementConsts::DIRECTION_DOWN;
+			break;
+		}
 	}
-
 	return MovementConsts::NO_DIRECTION;
 }
 
@@ -69,50 +50,30 @@ void SmartGuard::updateMovement(GameWindow& gameWindow, GameInformation& gameInf
 		newDirection = MovementConsts::NO_DIRECTION;
 		newTopLeft = m_topLeft;
 	}
-	
 }
 
-
-void SmartGuard::blockDirection(const sf::Vector2f& blockedDirection)
+void SmartGuard::handleCollision(GameInformation& gameInfo, Participant& obj, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
 {
-	if (blockedDirection == MovementConsts::DIRECTION_DOWN)
-		m_downIsOpen = false;
-	if (blockedDirection == MovementConsts::DIRECTION_LEFT)
-		m_leftIsOpen = false;
-	if (blockedDirection == MovementConsts::DIRECTION_RIGHT)
-		m_rightIsOpen = false;
-	if (blockedDirection == MovementConsts::DIRECTION_UP)
-		m_upIsOpen = false;
+	obj.handleCollision(gameInfo, *this, newDirection, newTopLeft);
 }
 
-void SmartGuard::openDirection(const sf::Vector2f& openDirection)
+void SmartGuard::handleCollision(GameInformation& gameInfo, Player& player,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
 {
-
+	if (newTopLeft == m_topLeft)
+		gameInfo.setLife();	
 }
 
-
-void SmartGuard::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, Participant& obj,
-	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
-{
-	//temps will solve the problem of remembering the last one
-	obj.handleCollision(gameWindow, gameInfo, *this, newDirection, newTopLeft);
-}
-
-void SmartGuard::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, SmartGuard& guard,
-	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
+void SmartGuard::handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
 {}
+
+
+void SmartGuard::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+{}
+
 
 void SmartGuard::finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
 {
+	m_prevLocation = m_topLeft;
 	m_topLeft = newTopLeft;
 	m_direction = newDirection;
-	openAll();
-}
-
-void SmartGuard::openAll()
-{
-	m_leftIsOpen = true;
-	m_rightIsOpen = true;
-	m_upIsOpen = true;
-	m_downIsOpen = true;
 }

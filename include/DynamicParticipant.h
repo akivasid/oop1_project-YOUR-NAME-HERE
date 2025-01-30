@@ -12,6 +12,7 @@ public:
 
 	//public functions
 	bool gotToTopLeft() const;
+	void resetLocation();
 	sf::Vector2f getDirection() const;
 	void setDirection(const sf::Vector2f& newDirection);
 	void move(const float& seconds);
@@ -24,7 +25,8 @@ protected:
 	//members
 	sf::Vector2f m_curLocation;
 	sf::Vector2f m_direction;
-	sf::Clock m_clock;
+	const sf::Vector2f m_firstLocation;
+	//sf::Clock m_clock;
 	
 	//private functions
 	sf::Vector2f getNewLocation(const float& seconds) const;

@@ -33,15 +33,11 @@ sf::Vector2f Player::getWantedDirection() const
 	return MovementConsts::NO_DIRECTION;
 }
 
-void Player::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, Participant& obj,
-							sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Player::handleCollision(GameInformation& gameInfo, Participant& obj, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
 {
 	
-	obj.handleCollision(gameWindow, gameInfo, *this, newDirection, newTopLeft);
-
-
-	gameInfo.setPlayerLocation(gameWindow.getNextTopLeft(m_topLeft,newDirection));
-	
+	obj.handleCollision(gameInfo, *this, newDirection, newTopLeft);
+	gameInfo.setPlayerLocation(newTopLeft);
 }
 
 
@@ -51,6 +47,19 @@ void Player::finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& n
 	m_direction = newDirection;
 }
 
-void Player::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, SmartGuard& guard,
-	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
+void Player::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
+{
+	if (newTopLeft == m_topLeft)
+		gameInfo.setLife();
+}
+
+
+void Player::handleCollision(GameInformation& gameInfo, Player& player,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
 {}
+
+
+void Player::handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+{
+	if (newTopLeft == m_topLeft)
+		gameInfo.setLife();
+}

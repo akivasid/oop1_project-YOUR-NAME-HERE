@@ -38,21 +38,27 @@ void DumbGuard::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo
 	}
 }
 
-
-
-void DumbGuard::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, Participant& obj,
-	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
-{
-	obj.handleCollision(gameWindow, gameInfo, *this, newDirection, newTopLeft);
-}
-
-void DumbGuard::handleCollision(GameWindow& gameWindow, GameInformation& gameInfo, SmartGuard& guard,
-	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
-{}
-
-
 void DumbGuard::finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
 {
 	m_topLeft = newTopLeft;
 	m_direction = newDirection;
 }
+
+void DumbGuard::handleCollision(GameInformation& gameInfo, Participant& obj, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+{
+	obj.handleCollision(gameInfo, *this, newDirection, newTopLeft);
+}
+
+void DumbGuard::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
+{}
+
+
+void DumbGuard::handleCollision(GameInformation& gameInfo, Player& player,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+{
+	if (newTopLeft == m_topLeft)
+		gameInfo.setLife();
+}
+
+
+void DumbGuard::handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+{}

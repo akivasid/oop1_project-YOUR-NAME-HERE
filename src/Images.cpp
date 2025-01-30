@@ -11,6 +11,8 @@ void Images::loadAllTextures()
 	loadDoor();
 	loadRock();
 	loadWall();
+	loadBomb();
+	loadExplosion();
 }
 
 
@@ -65,4 +67,17 @@ void Images::loadDoor()
 {
 	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_DOOR))
 		std::cerr << "The image named" << ImagesConst::NAME_DOOR << "was not loaded\n";
+}
+
+void Images::loadBomb()
+{
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_BOMB))
+		std::cerr << "The image named" << ImagesConst::NAME_BOMB << "was not loaded\n";
+}
+
+
+void Images::loadExplosion()
+{
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_EXPLOSION))
+		std::cerr << "The image named" << ImagesConst::NAME_EXPLOSION << "was not loaded\n";
 }

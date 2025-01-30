@@ -23,4 +23,6 @@ private:
 	static void loadWall();
 	static void loadRock();
 	static void loadDoor();
+	static void loadBomb();
+	static void loadExplosion();
 };

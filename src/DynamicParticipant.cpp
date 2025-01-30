@@ -1,9 +1,16 @@
 #include "DynamicParticipant.h"
 
 DynamicParticipant::DynamicParticipant(const sf::Vector2f& location, const sf::Vector2f& wantedSize, const ParticipantType& type)
-	:Participant(location, wantedSize, type), m_direction(0.f, 0.f), m_curLocation(location), m_clock()
+	:Participant(location, wantedSize, type), m_direction(0.f, 0.f), m_curLocation(location), m_firstLocation(m_curLocation)
 {}
 
+void DynamicParticipant::resetLocation()
+{
+	m_topLeft = m_firstLocation;
+	m_curLocation = m_topLeft;
+	m_direction = MovementConsts::NO_DIRECTION;
+	m_picture.setPosition(m_topLeft);
+}
 
 sf::Vector2f DynamicParticipant::getDirection() const
 {
