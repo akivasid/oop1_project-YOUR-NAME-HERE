@@ -18,7 +18,7 @@ public:
 	sf::Vector2f getTopLeft(const sf::Vector2f& newLocation) const;
 	sf::Vector2f getNextTopLeft(const sf::Vector2f& location, const sf::Vector2f& direction) const;
 	
-	void initializer(int row, int col);
+	void initializer(int row, int col); 
 	
 	const sf::Vector2f getTileSize() const;
 	const sf::Event pollEvent();

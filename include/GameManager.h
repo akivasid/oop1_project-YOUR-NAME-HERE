@@ -11,6 +11,7 @@
 #include "Wall.h"
 #include "Rock.h"
 #include "Door.h"
+#include "Bomb.h"
 
 
 
@@ -26,19 +27,25 @@ public:
 
 
 private:
+	//members
 	GameInformation m_gameInfo;
 	GameWindow m_gameWindow;
 	std::vector <std::unique_ptr<DynamicParticipant>> m_dynamic;
 	std::vector <std::unique_ptr <StaticParticipant> > m_static;
+	std::vector <std::unique_ptr <Bomb>> m_bombs;
 	
 	//private functions
 	void setLevel(const std::string& nameLevel);
 	void readFile(int& row, int& col, const std::string& nameLevel);
 	void updateObjects(const std::string& nameLevel, int& guards);
+	void handleBombs();
+	void handleBombCollisions(int i);
 	void handleEvents();
 	void handleMovement(sf::Clock& clock);
-	void manageCollisions(sf::Vector2f& newDirection, sf::Vector2f& newTopLeft, const int i);
+	void createBombs();
+	void manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const int i);
 	void manageFirstLocations();
+	void clearDeadObjects();
 	void updateWindow();
 	void clearObjects();
 };

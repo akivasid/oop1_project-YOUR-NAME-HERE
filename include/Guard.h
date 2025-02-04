@@ -1,6 +1,5 @@
 #pragma once
 #include "DynamicParticipant.h"
-#include "Player.h"
 
 
 class Guard : public DynamicParticipant
@@ -11,11 +10,6 @@ public:
 
 	virtual ~Guard() = default;
 
-	//public functions
-	
-	
-	
 private:
-	
 
 };

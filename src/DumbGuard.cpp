@@ -6,59 +6,59 @@ DumbGuard::DumbGuard(const sf::Vector2f& location, const sf::Vector2f& wantedSiz
 {}
 
 
-sf::Vector2f DumbGuard::getWantedDirection() const
+void DumbGuard::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo)
+{
+	
+	changeDirection();
+	sf::Vector2f newTopLeft = gameWindow.getNextTopLeft(m_topLeft, m_direction);
+	if (gameWindow.inArea(newTopLeft))
+		m_topLeft = newTopLeft;
+	else
+		m_direction = MovementConsts::NO_DIRECTION;
+}
+
+
+void DumbGuard::changeDirection()
 {
 	int directionRandom = std::rand() % 4;
 	switch (directionRandom)
 	{
 	case  0:
-		return MovementConsts::DIRECTION_RIGHT;
-		break;
+		m_direction = MovementConsts::DIRECTION_RIGHT;
+		return;
 	case 1:
-		return MovementConsts::DIRECTION_LEFT;
-		break;
+		m_direction = MovementConsts::DIRECTION_LEFT;
+		return;
 	case 2:
-		return MovementConsts::DIRECTION_UP;
-		break;
+		m_direction = MovementConsts::DIRECTION_UP;
+		return;
 	case 3:
-		return MovementConsts::DIRECTION_DOWN;
-		break;
+		m_direction = MovementConsts::DIRECTION_DOWN;
+		return;
 	}
-	return MovementConsts::NO_DIRECTION;
+	m_direction = MovementConsts::NO_DIRECTION;
 }
 
-void DumbGuard::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+
+void DumbGuard::handleCollision(Participant& obj, GameInformation& gameInfo)
 {
-	newDirection = getWantedDirection();
-	newTopLeft = gameWindow.getNextTopLeft(m_topLeft, newDirection);
-	if (!gameWindow.inArea(newTopLeft))
-	{
-		newDirection = MovementConsts::NO_DIRECTION;
-		newTopLeft = m_topLeft;
-	}
+	obj.handleCollision(*this, gameInfo);
 }
 
-void DumbGuard::finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
-{
-	m_topLeft = newTopLeft;
-	m_direction = newDirection;
-}
-
-void DumbGuard::handleCollision(GameInformation& gameInfo, Participant& obj, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
-{
-	obj.handleCollision(gameInfo, *this, newDirection, newTopLeft);
-}
-
-void DumbGuard::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
+void DumbGuard::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 {}
 
 
-void DumbGuard::handleCollision(GameInformation& gameInfo, Player& player,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void DumbGuard::handleCollision(Player& player, GameInformation& gameInfo)
 {
-	if (newTopLeft == m_topLeft)
+	if (gameInfo.getPlayerLocation() == m_topLeft)
 		gameInfo.setLife();
 }
 
 
-void DumbGuard::handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void DumbGuard::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
+{}
+
+
+void DumbGuard::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 {}

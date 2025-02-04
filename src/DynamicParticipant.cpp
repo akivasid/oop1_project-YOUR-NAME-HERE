@@ -4,6 +4,12 @@ DynamicParticipant::DynamicParticipant(const sf::Vector2f& location, const sf::V
 	:Participant(location, wantedSize, type), m_direction(0.f, 0.f), m_curLocation(location), m_firstLocation(m_curLocation)
 {}
 
+void DynamicParticipant::setTopLeft(const sf::Vector2f& newTopLeft)
+{
+	m_topLeft = newTopLeft;
+}
+
+
 void DynamicParticipant::resetLocation()
 {
 	m_topLeft = m_firstLocation;

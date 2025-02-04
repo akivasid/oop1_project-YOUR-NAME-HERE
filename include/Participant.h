@@ -10,6 +10,7 @@ class DumbGuard;
 class Player;
 class Rock;
 class Wall;
+class Bomb;
 
 
 class Participant
@@ -24,12 +25,15 @@ public:
 	sf::Vector2f getTopLeft() const;
 	const ParticipantType getType() const;
 	void draw(GameWindow& gameWindow);
+	bool getDeadOrAlive() const;
+	void setDead();
 
 	
-	virtual void handleCollision(GameInformation& gameInfo, Participant& obj,sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
-	virtual void handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
-	virtual void handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
-	virtual void handleCollision(GameInformation& gameInfo, Player& player, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
+	virtual void handleCollision(Participant& obj , GameInformation& gameInfo) = 0;
+	virtual void handleCollision(SmartGuard& guard, GameInformation& gameInfo) = 0;
+	virtual void handleCollision(DumbGuard& guard , GameInformation& gameInfo) = 0;
+	virtual void handleCollision(Player& player   , GameInformation& gameInfo) = 0;
+	virtual void handleCollision(Bomb& bomb  , GameInformation& gameInfo) = 0;
 	
 
 protected:

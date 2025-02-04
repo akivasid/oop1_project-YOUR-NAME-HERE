@@ -9,6 +9,6 @@ namespace ImagesConst
 	const std::string NAME_WALL = "Wall.png";
 	const std::string NAME_ROCK = "Rock.png";
 	const std::string NAME_DOOR = "Door.png";
-	const std::string NAME_BOMB = "Bomb.png";
-	const std::string NAME_EXPLOSION = "Explosion.png";
+	const std::string NAME_BOMB = "Bomb.jpg";
+	const std::string NAME_EXPLOSION = "Explosion.jpg";
 }

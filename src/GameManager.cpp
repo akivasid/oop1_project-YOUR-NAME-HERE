@@ -13,19 +13,24 @@ void GameManager::runGame()
 	std::fstream filePlaylist(GameWindowConsts::NAME_PLAYLIST_LEVELS);
 	std::string nameLevel; 
 
-	while (std::getline(filePlaylist, nameLevel)) //level loop
+	while (std::getline(filePlaylist, nameLevel) ) //level loop
 	{
 		setLevel(nameLevel);
 		nameLevel.clear();
 		handleEvents();
 		clearObjects();
+		if (m_gameInfo.getLife() <= 0)
+			break;
 	}
 }
+
+//============================================ private functions ==================================
+
 
 void GameManager::handleEvents()
 {
 	sf::Clock clock;
-	while (m_gameWindow.isOpen() && m_gameInfo.getLife()) //event loop
+	while (m_gameWindow.isOpen()) //event loop
 	{
 		sf::Event event = m_gameWindow.pollEvent();
 		
@@ -35,11 +40,44 @@ void GameManager::handleEvents()
 			break;
 		}
 		
-		handleMovement(clock);
-		if (m_gameInfo.getPlayerStatus())
+		handleBombs();
+		if (m_gameInfo.getLife() <= 0)
 			return;
+		handleMovement(clock);
+		if (m_gameInfo.getPlayerStatus() || m_gameInfo.getLife() <= 0)
+			return;
+
 		updateWindow();
 	}
+}
+
+void GameManager::handleBombs()
+{
+	for (int i = 0; i < m_bombs.size(); i++)
+	{
+		m_bombs[i]->bombStateUpdate();
+		if (m_bombs[i]->bombExploded())
+			handleBombCollisions(i);
+	}
+}
+
+void GameManager::handleBombCollisions(int i)
+{
+	unsigned prevLife = m_gameInfo.getLife();
+	for (int j = 0; j < m_dynamic.size(); j++)
+	{
+		m_bombs[i]->handleCollision(*m_dynamic[j], m_gameInfo);
+
+		if (m_gameInfo.getLife() != prevLife)
+		{
+			m_bombs.clear();
+			manageFirstLocations();
+			return;
+		}
+	}
+
+	for (int j = 0; j < m_static.size(); j++)
+		m_bombs[i]->handleCollision(*m_static[j], m_gameInfo);
 }
 
 
@@ -49,20 +87,74 @@ void GameManager::handleMovement(sf::Clock& clock)
 	{
 		if (m_dynamic[i]->gotToTopLeft())
 		{
-			sf::Vector2f newDirection(MovementConsts::NO_DIRECTION);
-			sf::Vector2f newTopLeft(m_gameWindow.getNextTopLeft(m_dynamic[i]->getTopLeft(), newDirection));
-			m_dynamic[i]->updateMovement(m_gameWindow, m_gameInfo,  newDirection, newTopLeft);
-			if (newDirection != MovementConsts::NO_DIRECTION)
-				manageCollisions(newDirection, newTopLeft, i);
+			sf::Vector2f prevTopLeft(m_dynamic[i]->getTopLeft());
+			m_dynamic[i]->updateMovement(m_gameWindow, m_gameInfo);
+			createBombs();
+			if (m_dynamic[i]->getDirection() != MovementConsts::NO_DIRECTION)
+				manageDynamicCollisions(prevTopLeft, i);
 		}
 
+		clearDeadObjects();
 		m_dynamic[i]->move(clock.getElapsedTime().asSeconds());
 	}
 
 	clock.restart();
 }
 
-//============================================ private functions ==================================
+void GameManager::createBombs()
+{
+	if (m_gameInfo.getBombDrop())
+	{
+		m_bombs.push_back(std::make_unique<Bomb>(m_gameInfo.getPlayerLocation(), m_gameWindow.getTileSize()));
+		m_gameInfo.setDropBomb(false);
+	}
+}
+
+
+void GameManager::manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const int i)
+{
+	unsigned prevLife = m_gameInfo.getLife();
+
+	for (int j = 0; j < m_static.size(); j++)
+	{
+		m_dynamic[i]->handleCollision(*m_static[j], m_gameInfo);//do here the check if won
+		if (m_dynamic[i]->getDirection() == MovementConsts::NO_DIRECTION)
+			m_dynamic[i]->setTopLeft(prevTopLeft);			
+	}
+
+	for (int j = 0; j < m_dynamic.size(); j++)
+	{
+		m_dynamic[i]->handleCollision(*m_dynamic[j], m_gameInfo);
+
+		if (m_gameInfo.getLife() != prevLife)
+		{
+			m_bombs.clear();
+			manageFirstLocations();
+			return;
+		}
+	}
+
+	for (int j = 0; j < m_bombs.size(); j++)
+	{
+		if (m_bombs[j]->bombExploded())
+			m_dynamic[i]->handleCollision(*m_bombs[j], m_gameInfo);
+		if (m_gameInfo.getLife() != prevLife)
+		{
+			m_bombs.clear();
+			manageFirstLocations();
+			return;
+		}
+	}
+}
+
+
+void GameManager::clearDeadObjects()
+{
+	std::erase_if(m_bombs, [](const auto& object) {return !object->getDeadOrAlive(); });
+	std::erase_if(m_dynamic, [](const auto& object) {return !object->getDeadOrAlive(); });
+	std::erase_if(m_static, [](const auto& object) {return !object->getDeadOrAlive(); });
+}
+
 
 void GameManager::setLevel(const std::string& nameLevel)
 {
@@ -96,10 +188,14 @@ void GameManager::updateWindow()
 {
 	m_gameWindow.clear();
 	m_gameInfo.drawInfo(m_gameWindow);
+
+	for (int i = 0; i < m_bombs.size(); i++)
+		m_bombs[i]->draw(m_gameWindow);
 	for(int i=0; i<m_dynamic.size(); i++)
 		m_dynamic[i]->draw(m_gameWindow);
 	for (int i = 0; i < m_static.size(); i++)
 		m_static[i]->draw(m_gameWindow);
+	
 	m_gameWindow.display();
 }
 
@@ -156,26 +252,6 @@ void GameManager::updateObjects(const std::string& nameLevel, int& guards)
 }
 
 
-void GameManager::manageCollisions(sf::Vector2f& newDirection, sf::Vector2f& newTopLeft, const int i)
-{
-	unsigned prevLife = m_gameInfo.getLife();
-	for (int j = 0; j < m_dynamic.size(); j++)
-	{
-		if (i != j)
-			m_dynamic[i]->handleCollision(m_gameInfo, *m_dynamic[j], newDirection, newTopLeft);
-		if (m_gameInfo.getLife() != prevLife)
-		{
-			manageFirstLocations();
-			return;
-		}
-	}
-
-	for (int k = 0; k < m_static.size(); k++)
-		m_dynamic[i]->handleCollision(m_gameInfo, *m_static[k], newDirection, newTopLeft);
-
-	m_dynamic[i]->finalMovement(newTopLeft, newDirection);
-}
-
 void GameManager::manageFirstLocations()
 {
 	for (int i = 0; i < m_dynamic.size(); i++)
@@ -186,4 +262,5 @@ void GameManager::clearObjects()
 {
 	m_dynamic.clear();
 	m_static.clear();
+	m_bombs.clear();
 }

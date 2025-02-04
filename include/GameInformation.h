@@ -22,7 +22,9 @@ public:
 	void setLife();
 	int getLife() const;
 	void setPlayerWon();
-	bool getPlayerStatus();
+	bool getPlayerStatus() const;
+	bool getBombDrop() const;
+	void setDropBomb(bool toDrop);
 
 
 private:
@@ -30,7 +32,7 @@ private:
 	sf::Vector2f m_playerLocation;
 	unsigned m_level;
 	sf::Text m_levelText;
-	unsigned m_life;
+	int m_life;
 	sf::Text m_lifeText;
 	unsigned m_score;
 	sf::Text m_scoreText;
@@ -40,5 +42,6 @@ private:
 	sf::Text m_timeText;
 	bool m_winStatus;
 	sf::RectangleShape m_rectangle;
+	bool m_dropBomb;
 };
 

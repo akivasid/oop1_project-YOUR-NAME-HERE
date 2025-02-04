@@ -1,21 +1,24 @@
 #include "SmartGuard.h"
 
 SmartGuard::SmartGuard(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
-	:Guard(location, wantedSize), m_target(location)
+	:Guard(location, wantedSize), m_target(location), m_stuckInPlace(false)
 {}
 
 
-sf::Vector2f SmartGuard::getWantedDirection() const
+void SmartGuard::changeDirection()
 {
-	if (m_topLeft != m_prevLocation) {
+	if (!m_stuckInPlace) 
+	{
 		if (m_target.x > m_topLeft.x)
-			return MovementConsts::DIRECTION_RIGHT;
-		if (m_target.x < m_topLeft.x)
-			return MovementConsts::DIRECTION_LEFT;
-		if (m_target.y < m_topLeft.y)
-			return MovementConsts::DIRECTION_UP;
-		if (m_target.y > m_topLeft.y)
-			return MovementConsts::DIRECTION_DOWN;
+			m_direction = MovementConsts::DIRECTION_RIGHT;
+		else if (m_target.x < m_topLeft.x)
+			m_direction = MovementConsts::DIRECTION_LEFT;
+		else if (m_target.y < m_topLeft.y)
+			m_direction = MovementConsts::DIRECTION_UP;
+		else if (m_target.y > m_topLeft.y)
+			m_direction = MovementConsts::DIRECTION_DOWN;
+		else
+			m_direction = MovementConsts::NO_DIRECTION;
 	}
 
 	else 
@@ -24,56 +27,58 @@ sf::Vector2f SmartGuard::getWantedDirection() const
 		switch (directionRandom)
 		{
 		case  0:
-			return MovementConsts::DIRECTION_RIGHT;
-			break;
+			m_direction = MovementConsts::DIRECTION_RIGHT;
+			return;
 		case 1:
-			return MovementConsts::DIRECTION_LEFT;
-			break;
+			m_direction = MovementConsts::DIRECTION_LEFT;
+			return;
 		case 2:
-			return MovementConsts::DIRECTION_UP;
-			break;
+			m_direction = MovementConsts::DIRECTION_UP;
+			return;
 		case 3:
-			return MovementConsts::DIRECTION_DOWN;
-			break;
+			m_direction = MovementConsts::DIRECTION_DOWN;
+			return;
 		}
 	}
-	return MovementConsts::NO_DIRECTION;
 }
 
-void SmartGuard::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void SmartGuard::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo)
 {
+
 	m_target = gameInfo.getPlayerLocation();
-	newDirection = getWantedDirection();
-	newTopLeft = gameWindow.getNextTopLeft(m_topLeft, newDirection);
-	if (!gameWindow.inArea(newTopLeft))
+	changeDirection();
+	sf::Vector2f newTopLeft = gameWindow.getNextTopLeft(m_topLeft, m_direction);
+	if (gameWindow.inArea(newTopLeft))
+		m_topLeft = newTopLeft;
+
+	else
 	{
-		newDirection = MovementConsts::NO_DIRECTION;
-		newTopLeft = m_topLeft;
+		m_stuckInPlace = true;
+		m_direction = MovementConsts::NO_DIRECTION;
 	}
 }
 
-void SmartGuard::handleCollision(GameInformation& gameInfo, Participant& obj, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void SmartGuard::handleCollision(Participant& obj, GameInformation& gameInfo)
 {
-	obj.handleCollision(gameInfo, *this, newDirection, newTopLeft);
+	obj.handleCollision(*this, gameInfo);
+	if (m_direction == MovementConsts::NO_DIRECTION)
+		m_stuckInPlace = true;
+	else
+		m_stuckInPlace = false;
 }
 
-void SmartGuard::handleCollision(GameInformation& gameInfo, Player& player,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void SmartGuard::handleCollision(Player& player, GameInformation& gameInfo)
 {
-	if (newTopLeft == m_topLeft)
+	if (gameInfo.getPlayerLocation() == m_topLeft)
 		gameInfo.setLife();	
 }
 
-void SmartGuard::handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void SmartGuard::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 {}
 
 
-void SmartGuard::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void SmartGuard::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 {}
 
-
-void SmartGuard::finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
-{
-	m_prevLocation = m_topLeft;
-	m_topLeft = newTopLeft;
-	m_direction = newDirection;
-}
+void SmartGuard::handleCollision(Bomb& bomb, GameInformation& gameInfo)
+{}

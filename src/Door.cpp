@@ -6,20 +6,23 @@ Door::Door(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 {}
 
 //public functions
-void Door::handleCollision(GameInformation& gameInfo, Participant& obj, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Door::handleCollision(Participant& obj, GameInformation& gameInfo)
 {}
 
 
-void Door::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
-{}
-
-
-void Door::handleCollision(GameInformation& gameInfo, Player& player, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Door::handleCollision(Player& player, GameInformation& gameInfo)
 {
-	if (newTopLeft == m_topLeft)
+	if (player.getTopLeft() == m_topLeft)
 		gameInfo.setPlayerWon();
 }
 
 
-void Door::handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Door::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
+{}
+
+
+void Door::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
+{}
+
+void Door::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 {}

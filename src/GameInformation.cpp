@@ -5,7 +5,7 @@
 GameInformation::GameInformation()
 	:m_level(0), m_rectangle(GameInfoConsts::INFO_SIZE), m_clock(), m_countDown(), m_life(GameInfoConsts::LIFE), m_possiblePoints(0),
 	m_score(0),m_winStatus(false), m_lifeText(FontHolder::getText()), m_levelText(FontHolder::getText()), 
-	m_timeText(FontHolder::getText()), m_scoreText(FontHolder::getText())
+	m_timeText(FontHolder::getText()), m_scoreText(FontHolder::getText()), m_dropBomb(false)
 {
 	m_rectangle.setPosition(GameInfoConsts::INFO_LOCATION);
 	m_rectangle.setFillColor(GameInfoConsts::INFO_COLOR);
@@ -109,7 +109,17 @@ void GameInformation::setPlayerWon()
 }
 
 
-bool GameInformation::getPlayerStatus()
+bool GameInformation::getPlayerStatus() const
 {
 	return m_winStatus;
+}
+
+bool GameInformation::getBombDrop() const
+{
+	return m_dropBomb;
+}
+
+void GameInformation::setDropBomb(bool toDrop)
+{
+	m_dropBomb = toDrop;
 }

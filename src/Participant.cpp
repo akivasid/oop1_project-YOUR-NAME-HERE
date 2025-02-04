@@ -44,6 +44,9 @@ void Participant::pictureArrangement(const sf::Vector2f& wantedSize)
 	case ParticipantType::Wall:
 		m_picture = Images::getSprite(ParticipantType::Wall, wantedSize);
 		break;
+	case ParticipantType::Bomb:
+		m_picture = Images::getSprite(ParticipantType::Bomb, wantedSize);
+		break;
 	case ParticipantType::GiftKillGuard:
 		break;
 	case ParticipantType::GiftAddTime:
@@ -60,4 +63,14 @@ void Participant::pictureArrangement(const sf::Vector2f& wantedSize)
 void Participant::draw(GameWindow& gameWindow)
 {
 	gameWindow.draw(m_picture);
+}
+
+bool Participant::getDeadOrAlive() const
+{
+	return m_objectState;
+}
+
+void Participant::setDead()
+{
+	m_objectState = false;
 }

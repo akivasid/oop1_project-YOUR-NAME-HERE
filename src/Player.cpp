@@ -8,58 +8,69 @@ Player::Player(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 
 //===================================== public functions =================================
 
-void Player::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Player::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo)
 {
-	newDirection = getWantedDirection();
-	newTopLeft = gameWindow.getNextTopLeft(m_topLeft, newDirection);
-	if (!gameWindow.inArea(newTopLeft))
-	{
-		newDirection = MovementConsts::NO_DIRECTION;
-		newTopLeft = m_topLeft;
-	}
+	if (bombDropped(gameInfo))
+		return;
+		
+	changeDirection();
+	sf::Vector2f newTopLeft = gameWindow.getNextTopLeft(m_topLeft, m_direction);
+	if (gameWindow.inArea(newTopLeft))
+		m_topLeft = newTopLeft;
+	else
+		m_direction = MovementConsts::NO_DIRECTION;
 }
 
 
-sf::Vector2f Player::getWantedDirection() const
+void Player::changeDirection()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		return MovementConsts::DIRECTION_RIGHT;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		return MovementConsts::DIRECTION_LEFT;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		return MovementConsts::DIRECTION_UP;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		return MovementConsts::DIRECTION_DOWN;
-	return MovementConsts::NO_DIRECTION;
+		m_direction = MovementConsts::DIRECTION_RIGHT;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		m_direction = MovementConsts::DIRECTION_LEFT;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		m_direction = MovementConsts::DIRECTION_UP;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		m_direction = MovementConsts::DIRECTION_DOWN;
 }
 
-void Player::handleCollision(GameInformation& gameInfo, Participant& obj, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Player::handleCollision(Participant& obj, GameInformation& gameInfo)
 {
-	
-	obj.handleCollision(gameInfo, *this, newDirection, newTopLeft);
-	gameInfo.setPlayerLocation(newTopLeft);
+	obj.handleCollision(*this, gameInfo);
+	gameInfo.setPlayerLocation(m_topLeft);
 }
 
 
-void Player::finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection)
+void Player::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 {
-	m_topLeft = newTopLeft;
-	m_direction = newDirection;
-}
-
-void Player::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) 
-{
-	if (newTopLeft == m_topLeft)
+	if (guard.getTopLeft() == m_topLeft)
 		gameInfo.setLife();
 }
 
 
-void Player::handleCollision(GameInformation& gameInfo, Player& player,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Player::handleCollision(Player& player, GameInformation& gameInfo)
 {}
 
 
-void Player::handleCollision(GameInformation& gameInfo, DumbGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Player::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 {
-	if (newTopLeft == m_topLeft)
+	if (guard.getTopLeft() == m_topLeft)
+		gameInfo.setLife();
+}
+
+
+bool Player::bombDropped(GameInformation& gameInfo)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+	{
+		gameInfo.setDropBomb(true);
+		return true;
+	}
+	return false;
+}
+
+void Player::handleCollision(Bomb& bomb, GameInformation& gameInfo)
+{
+	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
 		gameInfo.setLife();
 }

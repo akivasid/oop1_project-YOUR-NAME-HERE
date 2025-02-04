@@ -11,13 +11,13 @@ public:
 	virtual ~DynamicParticipant() = default;
 
 	//public functions
+	void setTopLeft(const sf::Vector2f& newTopLeft);
+	void setDirection(const sf::Vector2f& newDirection);
 	bool gotToTopLeft() const;
 	void resetLocation();
 	sf::Vector2f getDirection() const;
-	void setDirection(const sf::Vector2f& newDirection);
 	void move(const float& seconds);
-	virtual void finalMovement(const sf::Vector2f& newTopLeft, const sf::Vector2f& newDirection) = 0;
-	virtual void updateMovement(GameWindow& gameWindow, GameInformation& gameInfo, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft) = 0;
+	virtual void updateMovement(GameWindow& gameWindow, GameInformation& gameInfo) = 0;
 	
 
 

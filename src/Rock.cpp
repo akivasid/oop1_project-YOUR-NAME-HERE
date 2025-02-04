@@ -7,38 +7,29 @@ Rock::Rock(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 
 
 
-void Rock::handleCollision(GameInformation& gameInfo, Participant& obj,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+void Rock::handleCollision(Participant& obj, GameInformation& gameInfo)
+{}
+
+
+void Rock::handleCollision(Player& player, GameInformation& gameInfo)
 {
-	if (newTopLeft == m_topLeft)
-	{
-		newTopLeft = obj.getTopLeft();
-		newDirection = MovementConsts::NO_DIRECTION;
-	}
+	if (player.getTopLeft() == m_topLeft)
+		player.setDirection(MovementConsts::NO_DIRECTION);
 }
 
-void Rock::handleCollision(GameInformation& gameInfo, SmartGuard& guard, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+
+void Rock::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 {
-	if (newTopLeft == m_topLeft)
-	{
-		newTopLeft = guard.getTopLeft();
-		newDirection = MovementConsts::NO_DIRECTION;
-	}
+	if (guard.getTopLeft() == m_topLeft)
+		guard.setDirection(MovementConsts::NO_DIRECTION);
 }
 
-void Rock::handleCollision(GameInformation& gameInfo, Player& player, sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
+
+void Rock::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 {
-	if (newTopLeft == m_topLeft)
-	{
-		newTopLeft = player.getTopLeft();
-		newDirection = MovementConsts::NO_DIRECTION;
-	}
+	if (guard.getTopLeft() == m_topLeft)
+		guard.setDirection(MovementConsts::NO_DIRECTION);
 }
 
-void Rock::handleCollision(GameInformation& gameInfo, DumbGuard& guard,	sf::Vector2f& newDirection, sf::Vector2f& newTopLeft)
-{
-	if (newTopLeft == m_topLeft)
-	{
-		newTopLeft = guard.getTopLeft();
-		newDirection = MovementConsts::NO_DIRECTION;
-	}
-}
+void Rock::handleCollision(Bomb& bomb, GameInformation& gameInfo)
+{}
