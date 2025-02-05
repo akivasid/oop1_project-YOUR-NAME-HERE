@@ -85,7 +85,7 @@ void SmartGuard::handleCollision(Participant& obj, GameInformation& gameInfo)
 void SmartGuard::handleCollision(Player& player, GameInformation& gameInfo)
 {
 	if (gameInfo.getPlayerLocation() == m_topLeft)
-		gameInfo.setLife();	
+		gameInfo.lostLife();	
 }
 
 

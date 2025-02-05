@@ -13,13 +13,13 @@ void GameManager::runGame()
 	std::fstream filePlaylist(GameWindowConsts::NAME_PLAYLIST_LEVELS);
 	std::string nameLevel; 
 
-	while (std::getline(filePlaylist, nameLevel) ) //level loop
+	while (std::getline(filePlaylist, nameLevel)) //level loop
 	{
 		setLevel(nameLevel);
 		nameLevel.clear();
 		handleEvents();
 		clearObjects();
-		if (m_gameInfo.getLife() <= 0)
+		if (m_gameInfo.getLife() <= 0 && m_gameWindow.isOpen())
 			break;
 	}
 }
@@ -52,7 +52,7 @@ void GameManager::handleEvents()
 		if (m_gameInfo.getPlayerStatus() || m_gameInfo.getLife() <= 0)
 			return;
 		
-		clock.restart();
+		
 		clearDeadObjects();
 		updateWindow();
 	}
@@ -76,7 +76,7 @@ void GameManager::handleBombCollisions(int i)
 	for (int j = 0; j < m_dynamic.size(); j++)
 	{
 		m_bombs[i]->handleCollision(*m_dynamic[j], m_gameInfo);
-		if (m_gameInfo.getLife() != prevLife)
+		if (m_gameInfo.getLife() == prevLife - 1)
 		{
 			m_bombs.clear();
 			manageFirstLocations();
@@ -103,6 +103,8 @@ void GameManager::handleMovement(sf::Clock& clock)
 
 		m_dynamic[i]->move(clock.getElapsedTime().asSeconds());
 	}
+
+	clock.restart();
 }
 
 
@@ -116,18 +118,20 @@ void GameManager::manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const
 {
 	unsigned prevLife = m_gameInfo.getLife();
 
-	for (int j = 0; j < m_static.size(); j++)
+	for (int j = 0; j < m_static.size(); j++)//satatic 
 	{
-		m_dynamic[i]->handleCollision(*m_static[j], m_gameInfo);//do here the check if won
+		m_dynamic[i]->handleCollision(*m_static[j], m_gameInfo);
 		if (m_dynamic[i]->getDirection() == MovementConsts::NO_DIRECTION)
-			m_dynamic[i]->setTopLeft(prevTopLeft);			
+			m_dynamic[i]->setTopLeft(prevTopLeft);	
+		if(m_gameInfo.getPlayerStatus())
+			return;
 	}
 
-	for (int j = 0; j < m_dynamic.size(); j++)
+	for (int j = 0; j < m_dynamic.size(); j++)//dynamic
 	{
 		m_dynamic[i]->handleCollision(*m_dynamic[j], m_gameInfo);
 
-		if (m_gameInfo.getLife() != prevLife)
+		if (m_gameInfo.getLife() == prevLife - 1)
 		{
 			m_bombs.clear();
 			manageFirstLocations();
@@ -276,6 +280,10 @@ void GameManager::createGifts(const int row, const int col)
 
 	case 3:
 		m_static.push_back(std::make_unique<GiftFreezeGuards>(m_gameWindow.getLocationByIndex(row, col), m_gameWindow.getTileSize()));
+		break;
+
+	case 4:
+		m_static.push_back(std::make_unique<GiftAddLife>(m_gameWindow.getLocationByIndex(row, col), m_gameWindow.getTileSize()));
 		break;
 
 	}

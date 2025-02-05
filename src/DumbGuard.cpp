@@ -66,7 +66,7 @@ void DumbGuard::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 void DumbGuard::handleCollision(Player& player, GameInformation& gameInfo)
 {
 	if (gameInfo.getPlayerLocation() == m_topLeft)
-		gameInfo.setLife();
+		gameInfo.lostLife();
 }
 
 

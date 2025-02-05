@@ -19,7 +19,8 @@ public:
 	void updateCountDown();
 	void setPlayerLocation(const sf::Vector2f& newLocation);
 	sf::Vector2f getPlayerLocation() const;
-	void setLife();
+	void lostLife();
+	void addLife();
 	int getLife() const;
 	void setPlayerWon();
 	bool getPlayerStatus() const;

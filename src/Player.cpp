@@ -41,7 +41,7 @@ void Player::handleCollision(Participant& obj, GameInformation& gameInfo)
 void Player::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 {
 	if (guard.getTopLeft() == m_topLeft)
-		gameInfo.setLife();
+		gameInfo.lostLife();
 }
 
 
@@ -52,12 +52,12 @@ void Player::handleCollision(Player& player, GameInformation& gameInfo)
 void Player::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 {
 	if (guard.getTopLeft() == m_topLeft)
-		gameInfo.setLife();
+		gameInfo.lostLife();
 }
 
 
 void Player::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 {
 	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
-		gameInfo.setLife();
+		gameInfo.lostLife();
 }

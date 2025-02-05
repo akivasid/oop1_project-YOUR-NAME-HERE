@@ -27,6 +27,8 @@ void GameInformation::initializer(int guards)
 	m_possiblePoints = GameInfoConsts::END_LEVEL + GameInfoConsts::LEVEL_GUARD * guards;
 	m_clock.restart();
 	m_countDown = GameInfoConsts::LEVEL_TIME;
+	m_freezeGuards = false;
+	m_killGuard = false;
 	updateOutput();
 }
 
@@ -92,9 +94,14 @@ sf::Vector2f GameInformation::getPlayerLocation() const
 }
 
 
-void GameInformation::setLife()
+void GameInformation::lostLife()
 {
 	m_life = m_life -1;
+}
+
+void GameInformation::addLife()
+{
+	m_life = m_life + 1;
 }
 
 

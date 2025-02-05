@@ -16,6 +16,7 @@
 #include "GiftAddTime.h"
 #include "GiftKillGuard.h"
 #include "GiftFreezeGuards.h"
+#include "GiftAddLife.h"
 
 
 class GameManager
