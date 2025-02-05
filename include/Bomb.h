@@ -1,8 +1,7 @@
 #pragma once
 #include "Participant.h"
 #include "BombConst.h"
-//#include "SmartGuard.h"
-//#include "DumbGuard.h"
+#include "FontHolder.h"
 
 class Player;
 
@@ -46,6 +45,7 @@ private:
 	sf::Clock m_clock;
 	sf::Time m_countDown;
 	sf::Time m_explosionTime;
+	sf::Text m_timerText;
 	
 	bool m_bombExploded;
 	bool m_bombExpired;
@@ -53,6 +53,7 @@ private:
 	//public functions
 	void setExplosionPictures(const sf::Vector2f& wantedSize);
 	void setExplosionLocation(const sf::Vector2f& location, const sf::Vector2f& wantedSize);
+	void updateTimerText();
 	
 	
 };

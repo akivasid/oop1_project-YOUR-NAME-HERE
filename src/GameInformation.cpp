@@ -3,18 +3,9 @@
 //======================================= constructor =========================================
 
 GameInformation::GameInformation()
-	:m_level(0), m_rectangle(GameInfoConsts::INFO_SIZE), m_clock(), m_countDown(), m_life(GameInfoConsts::LIFE), m_possiblePoints(0),
-	m_score(0),m_winStatus(false), m_lifeText(FontHolder::getText()), m_levelText(FontHolder::getText()), 
-	m_timeText(FontHolder::getText()), m_scoreText(FontHolder::getText()), m_killGuard(false), m_freezeGuards(false),
-	m_freezeTime(sf::seconds(5)), m_freezeClock()
-{
-	m_rectangle.setPosition(GameInfoConsts::INFO_LOCATION);
-	m_rectangle.setFillColor(GameInfoConsts::INFO_COLOR);
-	m_lifeText.setPosition(GameInfoConsts::LIFE_TEXT_LOCATION);
-	m_timeText.setPosition(GameInfoConsts::TIME_TEXT_LOCATION);
-	m_scoreText.setPosition(GameInfoConsts::SCORE_TEXT_LOCATION);
-	m_levelText.setPosition(GameInfoConsts::LEVEL_TEXT_LOCATION);
-}
+	:m_level(0),m_gameClock(), m_countDown(), m_life(GameInfoConsts::LIFE), m_possiblePoints(0),
+	m_score(0),m_winStatus(false), m_killGuard(false), m_freezeGuards(false), m_freezeTime(sf::seconds(5)), m_freezeClock()
+{}
 	
 
 //======================================= public functions =========================================
@@ -25,52 +16,31 @@ void GameInformation::initializer(int guards)
 	m_winStatus = false;
 	m_life = GameInfoConsts::LIFE;
 	m_possiblePoints = GameInfoConsts::END_LEVEL + GameInfoConsts::LEVEL_GUARD * guards;
-	m_clock.restart();
+	m_gameClock.restart();
 	m_countDown = GameInfoConsts::LEVEL_TIME;
 	m_freezeGuards = false;
 	m_killGuard = false;
-	updateOutput();
+	m_infoView.updateOutput(m_level, m_life, m_score, m_countDown.asSeconds());
 }
 
 
 void GameInformation::updateOutput()
 {
 	updateCountDown();
-
-	std::string levelStr = GameInfoConsts::LEVEL_OUTPUT + std::to_string(m_level);
-	std::string lifeStr = GameInfoConsts::LIFE_OUTPUT + std::to_string(m_life);
-	std::string scoreStr = GameInfoConsts::SCORE_OUTPUT + std::to_string(m_score);
-	std::string timeStr = GameInfoConsts::TIME_OUTPUT + std::to_string(static_cast <int>(m_countDown.asSeconds()) / 60)
-		+ ":" + (((static_cast <int>(m_countDown.asSeconds()) % 60) < 10) ? "0" : "")
-		+ std::to_string(static_cast <int>(m_countDown.asSeconds()) % 60);
-	
-	m_levelText.setString(levelStr);
-	m_lifeText.setString(lifeStr);
-	m_scoreText.setString(scoreStr);
-	m_timeText.setString(timeStr);	
+	m_infoView.updateOutput(m_level, m_life, m_score, m_countDown.asSeconds());
 }
 
 
 void GameInformation::drawInfo(GameWindow& window)
 {
 	updateOutput();
-	window.draw(m_rectangle);
-	window.draw(m_lifeText);
-	window.draw(m_timeText);
-	window.draw(m_levelText);
-	window.draw(m_scoreText);
-}
-
-
-const sf::RectangleShape& GameInformation::getInfoRec() const
-{
-	return m_rectangle;
+	m_infoView.draw(window);
 }
 
 
 void GameInformation::updateCountDown()
 {
-	m_countDown -= m_clock.restart();
+	m_countDown -= m_gameClock.restart();
 }
 
 

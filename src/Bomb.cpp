@@ -4,10 +4,13 @@
 Bomb::Bomb(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:Participant(location, wantedSize, ParticipantType::Bomb), m_clock(), m_countDown(BombConst::COUNT_DOWN),
 	m_explosionTime(BombConst::EXPLOSION_TIME),	m_bombExploded(false), m_bombExpired(false),
-	m_upValidation(true), m_downValidation(true), m_rightValidation(true), m_leftValidation(true)
+	m_upValidation(true), m_downValidation(true), m_rightValidation(true), m_leftValidation(true), m_timerText(FontHolder::getText())
 {
 	setExplosionLocation(location, wantedSize);
 	setExplosionPictures(wantedSize);
+	m_timerText.setPosition(sf::Vector2f(m_topLeft.x , m_topLeft.y ));
+	m_timerText.setCharacterSize(20);
+	m_timerText.setFillColor(sf::Color::Red);
 }
 
 
@@ -20,6 +23,7 @@ void Bomb::bombStateUpdate()
 			m_bombExploded = false;
 			m_bombExpired = true;
 			m_objectState = false;
+			setDead();
 		}
 
 		else
@@ -87,9 +91,9 @@ void Bomb::drawBomb(GameWindow& gameWindow)
 	{
 		m_picture = m_downPicture;
 		m_picture.setPosition(m_topLeft);
-		if(gameWindow.inArea(m_downLocation) && m_downValidation)
+		if (gameWindow.inArea(m_downLocation) && m_downValidation)
 			gameWindow.draw(m_downPicture);
-		if(gameWindow.inArea(m_leftLocation) && m_leftValidation)
+		if (gameWindow.inArea(m_leftLocation) && m_leftValidation)
 			gameWindow.draw(m_leftPicture);
 		if (gameWindow.inArea(m_rightLocation) && m_rightValidation)
 			gameWindow.draw(m_rightPicture);
@@ -98,6 +102,12 @@ void Bomb::drawBomb(GameWindow& gameWindow)
 	}
 
 	draw(gameWindow);
+
+	if(!m_bombExploded && !m_bombExpired)
+	{
+		updateTimerText();
+		gameWindow.draw(m_timerText);
+	}
 }
 
 
@@ -121,3 +131,9 @@ void Bomb::setExplosionPictures(const sf::Vector2f& wantedSize)
 	m_leftPicture.setPosition(m_leftLocation);
 }
 
+void Bomb::updateTimerText()
+{
+	int secondsLeft = static_cast<int>(m_countDown.asSeconds() - m_clock.getElapsedTime().asSeconds());
+	std::string str = std::to_string(secondsLeft);
+	m_timerText.setString(str);
+}

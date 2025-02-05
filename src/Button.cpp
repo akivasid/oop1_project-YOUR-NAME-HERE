@@ -38,13 +38,13 @@ void Button::setFrame(sf::RenderWindow& window, const float& frameThickness, con
 void Button::textCare()
 {
 	m_buttonText.setString(m_buttonName);
-	m_buttonText.setCharacterSize(int(m_buttonSize.y)/4);//make it smarter
+	m_buttonText.setCharacterSize(int(m_buttonSize.y)/4);
 
 	float sizeX = m_buttonText.getGlobalBounds().width;
 	float sizeY = m_buttonText.getGlobalBounds().height;
 	m_buttonText.setOrigin(sf::Vector2f(sizeX / 2, sizeY / 2));
 	sf::Vector2f center(m_buttonLocation.x + m_buttonSize.x / 2, m_buttonLocation.y + m_buttonSize.y / 2);
-	m_buttonText.setPosition(sf::Vector2f(center/*.x, center.y - sizeY / 2*/));//does not need it
+	m_buttonText.setPosition(sf::Vector2f(center));
 
 	m_buttonText.setFillColor(sf::Color::Red);
 }

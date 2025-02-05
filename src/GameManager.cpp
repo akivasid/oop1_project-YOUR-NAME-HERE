@@ -72,11 +72,11 @@ void GameManager::handleBombs()
 
 void GameManager::handleBombCollisions(int i)
 {
-	unsigned prevLife = m_gameInfo.getLife();
+	int prevLife = m_gameInfo.getLife();
 	for (int j = 0; j < m_dynamic.size(); j++)
 	{
 		m_bombs[i]->handleCollision(*m_dynamic[j], m_gameInfo);
-		if (m_gameInfo.getLife() == prevLife - 1)
+		if (m_gameInfo.getLife() == (prevLife - 1))
 		{
 			m_bombs.clear();
 			manageFirstLocations();
@@ -116,9 +116,9 @@ void GameManager::createBomb()
 
 void GameManager::manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const int i)
 {
-	unsigned prevLife = m_gameInfo.getLife();
+	int prevLife = m_gameInfo.getLife();
 
-	for (int j = 0; j < m_static.size(); j++)//satatic 
+	for (int j = 0; j < m_static.size(); j++)//static 
 	{
 		m_dynamic[i]->handleCollision(*m_static[j], m_gameInfo);
 		if (m_dynamic[i]->getDirection() == MovementConsts::NO_DIRECTION)
@@ -131,7 +131,7 @@ void GameManager::manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const
 	{
 		m_dynamic[i]->handleCollision(*m_dynamic[j], m_gameInfo);
 
-		if (m_gameInfo.getLife() == prevLife - 1)
+		if (m_gameInfo.getLife() == (prevLife - 1))
 		{
 			m_bombs.clear();
 			manageFirstLocations();

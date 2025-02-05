@@ -4,13 +4,13 @@
 
 namespace GameInfoConsts
 {
-	const sf::Vector2f INFO_SIZE(1000.0f, 400.0f);
+	const sf::Vector2f INFO_SIZE(1000.0f, 350.0f);
 	const sf::Vector2f INFO_LOCATION(0.0f, 1000.0f);
-	const sf::Vector2f LIFE_TEXT_LOCATION(50.0f, 1050.0f);
-	const sf::Vector2f LEVEL_TEXT_LOCATION(50.0f, 1150.0f);
-	const sf::Vector2f SCORE_TEXT_LOCATION(50.0f, 1250.0f);
-	const sf::Vector2f TIME_TEXT_LOCATION(50.0f, 1350.0f);
-	const sf::Color INFO_COLOR(sf::Color::Blue);
+	const sf::Vector2f LIFE_TEXT_LOCATION(50.0f, 1020.0f);
+	const sf::Vector2f LEVEL_TEXT_LOCATION(50.0f, 1100.0f);
+	const sf::Vector2f SCORE_TEXT_LOCATION(50.0f, 1180.0f);
+	const sf::Vector2f TIME_TEXT_LOCATION(50.0f, 1260.0f);
+	const sf::Color INFO_COLOR(sf::Color(103, -0, 30));
 
 	const sf::Time LEVEL_TIME = sf::seconds(240);
 

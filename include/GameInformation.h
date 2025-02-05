@@ -2,6 +2,7 @@
 #include "GameInfoConsts.h"
 #include "FontHolder.h"
 #include "GameWindow.h"
+#include "InformationView.h"
 #include <iostream>
 
 class GameInformation
@@ -13,10 +14,8 @@ public:
 	//public functions
 	void initializer(int guards);
 	void updateOutput();
-	const sf::RectangleShape& getInfoRec() const;
-	void drawInfo(GameWindow& window);
-	bool timeEnded() const;
 	void updateCountDown();
+	void drawInfo(GameWindow& window);
 	void setPlayerLocation(const sf::Vector2f& newLocation);
 	sf::Vector2f getPlayerLocation() const;
 	void lostLife();
@@ -29,26 +28,22 @@ public:
 	void setKillGuard(const bool kill);
 	void setFreezeGuards();
 	bool getFreezeGuards();
-
-
+	bool timeEnded() const;
+	
+	
 private:
 	//members
-	sf::Vector2f m_playerLocation;
 	unsigned m_level;
-	sf::Text m_levelText;
 	int m_life;
-	sf::Text m_lifeText;
 	unsigned m_score;
-	sf::Text m_scoreText;
 	unsigned m_possiblePoints;
-	sf::Clock m_clock;
+	sf::Clock m_gameClock;
 	sf::Time m_countDown;
-	sf::Text m_timeText;
+	sf::Vector2f m_playerLocation;
 	bool m_winStatus;
-	sf::RectangleShape m_rectangle;
 	bool m_killGuard;
 	bool m_freezeGuards;
 	sf::Time m_freezeTime;
 	sf::Clock m_freezeClock;
+	InformationView m_infoView;
 };
-
