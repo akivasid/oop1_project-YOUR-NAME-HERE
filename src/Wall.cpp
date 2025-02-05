@@ -31,4 +31,6 @@ void Wall::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 }
 
 void Wall::handleCollision(Bomb& bomb, GameInformation& gameInfo)
-{}
+{
+	bomb.validationUpdate(m_topLeft);
+}

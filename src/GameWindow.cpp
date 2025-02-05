@@ -24,7 +24,9 @@ void GameWindow::initializer(int row, int col)
 
 sf::Vector2f GameWindow::getLocationByIndex(const int row, const int col)
 {
-	return m_boardIndex[row][col];
+	if(row < m_rows && col < m_cols && row>=0 && col>=0)
+		return m_boardIndex[row][col];
+	return m_boardIndex[0][0];
 }
 
 
@@ -82,8 +84,8 @@ const sf::Vector2f GameWindow::getTileSize() const
 const sf::Event GameWindow::pollEvent()
 {
 	sf::Event event; 
-	while (m_window.pollEvent(event));
-	return event;
+	m_window.pollEvent(event);
+	return event;	
 }
 
 void GameWindow::draw(const sf::RectangleShape& rectangle)

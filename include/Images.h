@@ -25,4 +25,8 @@ private:
 	static void loadDoor();
 	static void loadBomb();
 	static void loadExplosion();
+	static void loadKillGuard();
+	static void loadTimeGift();
+	static void loadFreezeGuard();
+	static void loadLifeGift();
 };

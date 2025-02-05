@@ -30,30 +30,34 @@ void Participant::pictureArrangement(const sf::Vector2f& wantedSize)
 	switch (m_type)
 	{
 	case ParticipantType::Player:
-		m_picture = Images::getSprite(ParticipantType::Player, wantedSize);
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::Guard:
-		m_picture = Images::getSprite(ParticipantType::Guard, wantedSize);
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::Door:
-		m_picture = Images::getSprite(ParticipantType::Door, wantedSize);
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::Rock:
-		m_picture = Images::getSprite(ParticipantType::Rock, wantedSize);
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::Wall:
-		m_picture = Images::getSprite(ParticipantType::Wall, wantedSize);
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::Bomb:
-		m_picture = Images::getSprite(ParticipantType::Bomb, wantedSize);
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::GiftKillGuard:
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::GiftAddTime:
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::GiftFreezeGuards:
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	case ParticipantType::GiftAddLife:
+		m_picture = Images::getSprite(m_type, wantedSize);
 		break;
 	default:
 		break;

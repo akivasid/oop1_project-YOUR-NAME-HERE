@@ -30,12 +30,24 @@ void Bomb::bombStateUpdate()
 	}
 }
 
-bool Bomb::bombExploded() const//maybe not needed
+void Bomb::validationUpdate(const sf::Vector2f& location)
+{
+	if (location == m_downLocation)
+		m_downValidation = false;
+	else if (location == m_upLocation)
+		m_upValidation = false;
+	else if (location == m_rightLocation)
+		m_rightValidation = false;
+	else if (location == m_leftLocation)
+		m_leftValidation = false;
+}
+
+bool Bomb::bombExploded() const
 {
 	return m_bombExploded;
 }
 
-bool Bomb::bombExpired() const//maybe not needed
+bool Bomb::bombExpired() const
 {
 	return m_bombExpired;
 }
@@ -47,22 +59,14 @@ void Bomb::handleCollision(Participant& obj, GameInformation& gameInfo)
 }
 
 void Bomb::handleCollision(Player& player, GameInformation& gameInfo)
-{
-	if (bombExploded() && inExplosionArea(gameInfo.getPlayerLocation()))
-		gameInfo.setLife();
-}
+{}
+
 
 void Bomb::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
-{
-	/*if (bombExploded() && inExplosionArea(guard.getTopLeft()))
-		guard.setDead();*/
-}
+{}
 
 void Bomb::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
-{
-	/*if (bombExploded() && inExplosionArea(guard.getTopLeft()))
-		guard.setDead();*/
-}
+{}
 
 void Bomb::handleCollision(Bomb& bomb, GameInformation& gameInfo) 
 {}
@@ -74,6 +78,26 @@ bool Bomb::inExplosionArea(const sf::Vector2f& location)
 		location == m_rightLocation || location == m_leftLocation || location == m_topLeft)
 		return true;
 	return false;
+}
+
+void Bomb::drawBomb(GameWindow& gameWindow)
+{
+	
+	if (m_bombExploded)
+	{
+		m_picture = m_downPicture;
+		m_picture.setPosition(m_topLeft);
+		if(gameWindow.inArea(m_downLocation) && m_downValidation)
+			gameWindow.draw(m_downPicture);
+		if(gameWindow.inArea(m_leftLocation) && m_leftValidation)
+			gameWindow.draw(m_leftPicture);
+		if (gameWindow.inArea(m_rightLocation) && m_rightValidation)
+			gameWindow.draw(m_rightPicture);
+		if (gameWindow.inArea(m_upLocation) && m_upValidation)
+			gameWindow.draw(m_upPicture);
+	}
+
+	draw(gameWindow);
 }
 
 
@@ -96,3 +120,4 @@ void Bomb::setExplosionPictures(const sf::Vector2f& wantedSize)
 	m_leftPicture = Images::getSprite(ParticipantType::Explasion, wantedSize);
 	m_leftPicture.setPosition(m_leftLocation);
 }
+

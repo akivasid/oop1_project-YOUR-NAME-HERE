@@ -13,6 +13,11 @@ void Images::loadAllTextures()
 	loadWall();
 	loadBomb();
 	loadExplosion();
+	loadTimeGift();
+	loadKillGuard();
+	loadFreezeGuard();
+	loadLifeGift();
+
 }
 
 
@@ -80,4 +85,29 @@ void Images::loadExplosion()
 {
 	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_EXPLOSION))
 		std::cerr << "The image named" << ImagesConst::NAME_EXPLOSION << "was not loaded\n";
+}
+
+void Images::loadTimeGift()
+{
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_TIME_GIFT))
+		std::cerr << "The image named" << ImagesConst::NAME_TIME_GIFT << "was not loaded\n";
+}
+
+
+void Images::loadKillGuard()
+{
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_KILL_GIFT))
+		std::cerr << "The image named" << ImagesConst::NAME_KILL_GIFT << "was not loaded\n";
+}
+
+void Images::loadFreezeGuard()
+{
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_FREEZE_GIFT))
+		std::cerr << "The image named" << ImagesConst::NAME_FREEZE_GIFT << "was not loaded\n";
+}
+
+void Images::loadLifeGift()
+{
+	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_LIFE_GIFT))
+		std::cerr << "The image named" << ImagesConst::NAME_LIFE_GIFT << "was not loaded\n";
 }

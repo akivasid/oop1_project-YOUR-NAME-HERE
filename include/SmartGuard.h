@@ -2,6 +2,7 @@
 #include "Guard.h"
 #include "GameInformation.h"
 #include "DumbGuard.h"
+#include "Bomb.h"
 
 class Player;
 

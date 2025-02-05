@@ -1,6 +1,7 @@
 #pragma once
 #include "Guard.h"
 #include "GameInformation.h"
+#include "Bomb.h"
 
 class Player;
 class SmartGuard;

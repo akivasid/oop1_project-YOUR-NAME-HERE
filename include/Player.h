@@ -21,8 +21,5 @@ public:
 
 	  
 private:
-	void changeDirection();
-	bool bombDropped(GameInformation& gameInfo);
-	
-	
+	void changeDirection();	
 };

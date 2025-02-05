@@ -1,8 +1,8 @@
 #pragma once
 #include "Participant.h"
 #include "BombConst.h"
-#include "SmartGuard.h"
-#include "DumbGuard.h"
+//#include "SmartGuard.h"
+//#include "DumbGuard.h"
 
 class Player;
 
@@ -19,6 +19,8 @@ public:
 	bool bombExpired() const;
 	void bombStateUpdate();
 	bool inExplosionArea(const sf::Vector2f& location);
+	void drawBomb(GameWindow& gameWindow);
+	void validationUpdate(const sf::Vector2f& location);
 	
 	void handleCollision(Participant& obj, GameInformation& gameInfo) override;
 	void handleCollision(SmartGuard& guard, GameInformation& gameInfo) override;

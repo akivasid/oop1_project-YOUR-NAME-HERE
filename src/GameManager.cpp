@@ -39,17 +39,25 @@ void GameManager::handleEvents()
 			m_gameWindow.close();
 			break;
 		}
-		
+
+		if (event.type == sf::Event::KeyPressed)
+			if(event.key.code == sf::Keyboard::B)
+				createBomb();
+			
 		handleBombs();
 		if (m_gameInfo.getLife() <= 0)
 			return;
+		
 		handleMovement(clock);
 		if (m_gameInfo.getPlayerStatus() || m_gameInfo.getLife() <= 0)
 			return;
-
+		
+		clock.restart();
+		clearDeadObjects();
 		updateWindow();
 	}
 }
+
 
 void GameManager::handleBombs()
 {
@@ -61,13 +69,13 @@ void GameManager::handleBombs()
 	}
 }
 
+
 void GameManager::handleBombCollisions(int i)
 {
 	unsigned prevLife = m_gameInfo.getLife();
 	for (int j = 0; j < m_dynamic.size(); j++)
 	{
 		m_bombs[i]->handleCollision(*m_dynamic[j], m_gameInfo);
-
 		if (m_gameInfo.getLife() != prevLife)
 		{
 			m_bombs.clear();
@@ -89,25 +97,18 @@ void GameManager::handleMovement(sf::Clock& clock)
 		{
 			sf::Vector2f prevTopLeft(m_dynamic[i]->getTopLeft());
 			m_dynamic[i]->updateMovement(m_gameWindow, m_gameInfo);
-			createBombs();
 			if (m_dynamic[i]->getDirection() != MovementConsts::NO_DIRECTION)
 				manageDynamicCollisions(prevTopLeft, i);
 		}
 
-		clearDeadObjects();
 		m_dynamic[i]->move(clock.getElapsedTime().asSeconds());
 	}
-
-	clock.restart();
 }
 
-void GameManager::createBombs()
+
+void GameManager::createBomb()
 {
-	if (m_gameInfo.getBombDrop())
-	{
-		m_bombs.push_back(std::make_unique<Bomb>(m_gameInfo.getPlayerLocation(), m_gameWindow.getTileSize()));
-		m_gameInfo.setDropBomb(false);
-	}
+	m_bombs.push_back(std::make_unique<Bomb>(m_gameInfo.getPlayerLocation(), m_gameWindow.getTileSize()));
 }
 
 
@@ -133,18 +134,6 @@ void GameManager::manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const
 			return;
 		}
 	}
-
-	for (int j = 0; j < m_bombs.size(); j++)
-	{
-		if (m_bombs[j]->bombExploded())
-			m_dynamic[i]->handleCollision(*m_bombs[j], m_gameInfo);
-		if (m_gameInfo.getLife() != prevLife)
-		{
-			m_bombs.clear();
-			manageFirstLocations();
-			return;
-		}
-	}
 }
 
 
@@ -163,7 +152,6 @@ void GameManager::setLevel(const std::string& nameLevel)
 	m_gameWindow.initializer(row, col);
 	updateObjects(nameLevel, guards);
 	m_gameInfo.initializer(guards);
-
 	//sf::sleep(sf::seconds(3));
 	updateWindow();
 }
@@ -189,12 +177,14 @@ void GameManager::updateWindow()
 	m_gameWindow.clear();
 	m_gameInfo.drawInfo(m_gameWindow);
 
-	for (int i = 0; i < m_bombs.size(); i++)
-		m_bombs[i]->draw(m_gameWindow);
-	for(int i=0; i<m_dynamic.size(); i++)
-		m_dynamic[i]->draw(m_gameWindow);
+	
 	for (int i = 0; i < m_static.size(); i++)
 		m_static[i]->draw(m_gameWindow);
+	for (int i = 0; i < m_bombs.size(); i++)
+		m_bombs[i]->drawBomb(m_gameWindow);
+	for(int i=0; i<m_dynamic.size(); i++)
+		m_dynamic[i]->draw(m_gameWindow);
+	
 	
 	m_gameWindow.display();
 }
@@ -235,11 +225,16 @@ void GameManager::updateObjects(const std::string& nameLevel, int& guards)
 				break;
 
 			case ParticipantsCharId::ROCK:
+				createGifts(row, col);
 				m_static.push_back(std::make_unique<Rock>(m_gameWindow.getLocationByIndex(row, col), m_gameWindow.getTileSize()));
 				break;
 
 			case ParticipantsCharId::WALL:
 				m_static.push_back(std::make_unique<Wall>(m_gameWindow.getLocationByIndex(row, col), m_gameWindow.getTileSize()));
+				break;
+
+			case ' ':
+				createGifts(row, col);
 				break;
 
 			default:
@@ -263,4 +258,26 @@ void GameManager::clearObjects()
 	m_dynamic.clear();
 	m_static.clear();
 	m_bombs.clear();
+}
+
+void GameManager::createGifts(const int row, const int col)
+{
+	int random = std::rand() % 50;
+
+	switch (random)
+	{
+	case 1:
+		m_static.push_back(std::make_unique<GiftAddTime>(m_gameWindow.getLocationByIndex(row, col), m_gameWindow.getTileSize()));
+		break;
+
+	case 2:
+		m_static.push_back(std::make_unique<GiftKillGuard>(m_gameWindow.getLocationByIndex(row, col), m_gameWindow.getTileSize()));
+		break;
+
+	case 3:
+		m_static.push_back(std::make_unique<GiftFreezeGuards>(m_gameWindow.getLocationByIndex(row, col), m_gameWindow.getTileSize()));
+		break;
+
+	}
+
 }

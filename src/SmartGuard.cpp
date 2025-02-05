@@ -60,7 +60,22 @@ void SmartGuard::updateMovement(GameWindow& gameWindow, GameInformation& gameInf
 
 void SmartGuard::handleCollision(Participant& obj, GameInformation& gameInfo)
 {
+	if (gameInfo.getKillGuard())
+	{
+		setDead();
+		m_direction = MovementConsts::NO_DIRECTION;
+		gameInfo.setKillGuard(false);
+		return;
+	}
+
+	if (gameInfo.getFreezeGuards())
+	{
+		m_direction = MovementConsts::NO_DIRECTION;
+		return;
+	}
+
 	obj.handleCollision(*this, gameInfo);
+
 	if (m_direction == MovementConsts::NO_DIRECTION)
 		m_stuckInPlace = true;
 	else
@@ -73,6 +88,7 @@ void SmartGuard::handleCollision(Player& player, GameInformation& gameInfo)
 		gameInfo.setLife();	
 }
 
+
 void SmartGuard::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 {}
 
@@ -80,5 +96,9 @@ void SmartGuard::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 void SmartGuard::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 {}
 
+
 void SmartGuard::handleCollision(Bomb& bomb, GameInformation& gameInfo)
-{}
+{
+	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
+		setDead();
+}

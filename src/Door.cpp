@@ -25,4 +25,6 @@ void Door::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 {}
 
 void Door::handleCollision(Bomb& bomb, GameInformation& gameInfo)
-{}
+{
+	bomb.validationUpdate(m_topLeft);
+}

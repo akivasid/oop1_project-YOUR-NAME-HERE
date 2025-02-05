@@ -5,7 +5,8 @@
 
 namespace MovementConsts
 {
-	const int PIXEL_PER_SECOND = 150;
+	const int PLAYER_SPEED = 100;
+	const int GUARD_SPEED = 75;
 
 	const sf::Vector2f DIRECTION_RIGHT = sf::Vector2f(1.f, 0.f);
 	const sf::Vector2f DIRECTION_LEFT = sf::Vector2f(-1.f, 0.f);

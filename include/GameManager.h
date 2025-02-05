@@ -4,6 +4,7 @@
 #include <string>
 #include "ParticipantsCharId.h"
 #include "GameWindow.h"
+#include "GameWindowConsts.h"
 #include "GameInformation.h"
 #include "Player.h"
 #include "DumbGuard.h"
@@ -12,7 +13,9 @@
 #include "Rock.h"
 #include "Door.h"
 #include "Bomb.h"
-
+#include "GiftAddTime.h"
+#include "GiftKillGuard.h"
+#include "GiftFreezeGuards.h"
 
 
 class GameManager
@@ -38,11 +41,12 @@ private:
 	void setLevel(const std::string& nameLevel);
 	void readFile(int& row, int& col, const std::string& nameLevel);
 	void updateObjects(const std::string& nameLevel, int& guards);
+	void createGifts(const int row, const int col);
 	void handleBombs();
 	void handleBombCollisions(int i);
 	void handleEvents();
 	void handleMovement(sf::Clock& clock);
-	void createBombs();
+	void createBomb();
 	void manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const int i);
 	void manageFirstLocations();
 	void clearDeadObjects();

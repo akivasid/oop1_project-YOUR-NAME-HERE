@@ -42,6 +42,20 @@ void DumbGuard::changeDirection()
 
 void DumbGuard::handleCollision(Participant& obj, GameInformation& gameInfo)
 {
+	if (gameInfo.getKillGuard())
+	{
+		setDead();
+		m_direction = MovementConsts::NO_DIRECTION;
+		gameInfo.setKillGuard(false);
+		return;
+	}
+
+	if(gameInfo.getFreezeGuards())
+	{
+		m_direction = MovementConsts::NO_DIRECTION;
+		return;
+	}
+
 	obj.handleCollision(*this, gameInfo);
 }
 
@@ -61,4 +75,7 @@ void DumbGuard::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 
 
 void DumbGuard::handleCollision(Bomb& bomb, GameInformation& gameInfo)
-{}
+{
+	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
+		setDead();
+}

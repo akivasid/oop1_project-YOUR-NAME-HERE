@@ -3,16 +3,13 @@
 
 //====================================== constructor =================================
 Player::Player(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
-	:DynamicParticipant(location, wantedSize, ParticipantType::Player)
+	:DynamicParticipant(location, wantedSize, ParticipantType::Player, MovementConsts::PLAYER_SPEED)
 {}
 
 //===================================== public functions =================================
 
 void Player::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo)
 {
-	if (bombDropped(gameInfo))
-		return;
-		
 	changeDirection();
 	sf::Vector2f newTopLeft = gameWindow.getNextTopLeft(m_topLeft, m_direction);
 	if (gameWindow.inArea(newTopLeft))
@@ -58,16 +55,6 @@ void Player::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 		gameInfo.setLife();
 }
 
-
-bool Player::bombDropped(GameInformation& gameInfo)
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-	{
-		gameInfo.setDropBomb(true);
-		return true;
-	}
-	return false;
-}
 
 void Player::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 {

@@ -32,4 +32,7 @@ void Rock::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 }
 
 void Rock::handleCollision(Bomb& bomb, GameInformation& gameInfo)
-{}
+{
+	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
+		setDead();
+}

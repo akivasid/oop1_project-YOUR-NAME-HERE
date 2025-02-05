@@ -23,8 +23,11 @@ public:
 	int getLife() const;
 	void setPlayerWon();
 	bool getPlayerStatus() const;
-	bool getBombDrop() const;
-	void setDropBomb(bool toDrop);
+	void addToTime(const sf::Time& addTime);
+	bool getKillGuard();
+	void setKillGuard(const bool kill);
+	void setFreezeGuards();
+	bool getFreezeGuards();
 
 
 private:
@@ -42,6 +45,9 @@ private:
 	sf::Text m_timeText;
 	bool m_winStatus;
 	sf::RectangleShape m_rectangle;
-	bool m_dropBomb;
+	bool m_killGuard;
+	bool m_freezeGuards;
+	sf::Time m_freezeTime;
+	sf::Clock m_freezeClock;
 };
 
