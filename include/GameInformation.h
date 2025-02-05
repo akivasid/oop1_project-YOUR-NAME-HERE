@@ -29,6 +29,7 @@ public:
 	void setFreezeGuards();
 	bool getFreezeGuards();
 	bool timeEnded() const;
+	void setScoreKillGuard();
 	
 	
 private:

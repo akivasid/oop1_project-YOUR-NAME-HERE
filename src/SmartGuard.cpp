@@ -100,5 +100,8 @@ void SmartGuard::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
 void SmartGuard::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 {
 	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
+	{
 		setDead();
+		gameInfo.setScoreKillGuard();
+	}
 }

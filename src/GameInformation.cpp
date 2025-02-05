@@ -15,6 +15,7 @@ void GameInformation::initializer(int guards)
 	m_level++;
 	m_winStatus = false;
 	m_life = GameInfoConsts::LIFE;
+	m_score += m_possiblePoints;
 	m_possiblePoints = GameInfoConsts::END_LEVEL + GameInfoConsts::LEVEL_GUARD * guards;
 	m_gameClock.restart();
 	m_countDown = GameInfoConsts::LEVEL_TIME;
@@ -46,7 +47,7 @@ void GameInformation::updateCountDown()
 
 bool GameInformation::timeEnded() const
 {
-	if (m_countDown.asMicroseconds() <= 0)
+	if (m_countDown.asSeconds() <= 0)
 		return true;
 	return false;
 }
@@ -119,4 +120,9 @@ bool GameInformation::getFreezeGuards()
 	if (m_freezeGuards && m_freezeClock.getElapsedTime() >= m_freezeTime)
 		m_freezeGuards = false;
 	return m_freezeGuards;		
+}
+
+void GameInformation::setScoreKillGuard()
+{
+	m_score += GameInfoConsts::KILL_GUARD;
 }

@@ -49,7 +49,7 @@ void GameManager::handleEvents()
 			return;
 		
 		handleMovement(clock);
-		if (m_gameInfo.getPlayerStatus() || m_gameInfo.getLife() <= 0)
+		if (m_gameInfo.getPlayerStatus() || m_gameInfo.getLife() <= 0 || m_gameInfo.timeEnded())
 			return;
 		
 		

@@ -12,7 +12,7 @@ namespace GameInfoConsts
 	const sf::Vector2f TIME_TEXT_LOCATION(50.0f, 1260.0f);
 	const sf::Color INFO_COLOR(sf::Color(103, -0, 30));
 
-	const sf::Time LEVEL_TIME = sf::seconds(240);
+	const sf::Time LEVEL_TIME = sf::seconds(240);//different times for levels 
 
 	const unsigned LIFE = 5;
 	const unsigned KILL_GUARD = 5;

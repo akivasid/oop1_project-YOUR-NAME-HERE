@@ -47,6 +47,7 @@ void DumbGuard::handleCollision(Participant& obj, GameInformation& gameInfo)
 		setDead();
 		m_direction = MovementConsts::NO_DIRECTION;
 		gameInfo.setKillGuard(false);
+		gameInfo.setScoreKillGuard();
 		return;
 	}
 
@@ -77,5 +78,9 @@ void DumbGuard::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
 void DumbGuard::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 {
 	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
+	{
 		setDead();
+		gameInfo.setScoreKillGuard();
+	}
+
 }
