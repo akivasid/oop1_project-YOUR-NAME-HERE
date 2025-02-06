@@ -4,7 +4,7 @@
 //================================== constructor =====================================
 
 GameWindow::GameWindow()
-	:BasicWindow(GameWindowConsts::WINDOW_SIZE, GameWindowConsts::GAME_WINDOW_NAME), m_boardIndex(),
+	:BasicWindow(GameWindowConsts::WINDOW_SIZE, GameWindowConsts::GAME_WINDOW_NAME, GameWindowConsts::GAME_MUSIC), m_boardIndex(),
 	m_rows(0), m_cols(0), m_tileSize(0.f, 0.f)
 {
 	m_window.setFramerateLimit(60);

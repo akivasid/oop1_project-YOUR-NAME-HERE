@@ -19,6 +19,7 @@
 #include "GiftAddLife.h"
 
 
+
 class GameManager
 {
 public:
@@ -33,6 +34,7 @@ private:
 	//members
 	GameInformation m_gameInfo;
 	GameWindow m_gameWindow;
+	sf::Clock m_clock;
 	std::vector <std::unique_ptr<DynamicParticipant>> m_dynamic;
 	std::vector <std::unique_ptr <StaticParticipant> > m_static;
 	std::vector <std::unique_ptr <Bomb>> m_bombs;
@@ -42,13 +44,17 @@ private:
 	void readFile(int& row, int& col, const std::string& nameLevel);
 	void updateObjects(const std::string& nameLevel, int& guards);
 	void createGifts(const int row, const int col);
+	void createBomb(const sf::Event& event);
 	void handleBombs();
 	void handleBombCollisions(int i);
+	bool handleBombOnDynamic(const int index, const int prevLife);
+	void handleBombOnStatic(const int index, const int prevLife);
 	void handleEvents();
-	void handleMovement(sf::Clock& clock);
-	void createBomb();
-	void manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const int i);
-	void manageFirstLocations();
+	void handleMovement();
+	void manageDynamicCollisions(const sf::Vector2f& prevTopLeft, const int index);
+	bool manageDynamicOnStatic(const int index, const int prevLife, const sf::Vector2f& prevTopLeft);
+	void manageDynamicOnDynamic(const int index, const int prevLife, const sf::Vector2f& prevTopLeft);
+	void manageLostLife();
 	void clearDeadObjects();
 	void updateWindow();
 	void clearObjects();

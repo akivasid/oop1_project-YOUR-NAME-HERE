@@ -1,11 +1,12 @@
 #include"BasicWindow.h"
 
 
-BasicWindow::BasicWindow(const sf::Vector2f size, const std::string& windowName)
+BasicWindow::BasicWindow(const sf::Vector2f size, const std::string& windowName, const std::string& musicFile)
 	:m_windowSize(size), m_window(sf::VideoMode(unsigned(m_windowSize.x), unsigned(m_windowSize.y)), windowName)
 {
-	//m_window.clear();
-	//m_window.display();
+	if(!m_backgroundMusic.openFromFile(musicFile))
+		std::cerr << "failed to open file " << musicFile;
+	m_backgroundMusic.play();
 }
 
 
@@ -16,8 +17,8 @@ bool BasicWindow::isOpen() const
 
 void BasicWindow::close()
 {
-	if(isOpen())
-		m_window.close();
+	m_window.close();
+	stopMusic();
 }
 
 void BasicWindow::clear()
@@ -28,4 +29,14 @@ void BasicWindow::clear()
 void BasicWindow::display()
 {
 	m_window.display();
+}
+
+void BasicWindow::stopMusic()
+{
+	m_backgroundMusic.stop();
+}
+
+void BasicWindow::playMusic()
+{
+	m_backgroundMusic.play();
 }

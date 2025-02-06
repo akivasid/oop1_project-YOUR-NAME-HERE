@@ -59,3 +59,46 @@ void InformationView::draw(GameWindow& window)
 	window.draw(m_levelText);
 	window.draw(m_scoreText);
 }
+
+void InformationView::drawLevel(GameWindow& window)
+{
+	sf::Text level = m_levelText;
+	drawTransitions(window, level);
+}
+
+void InformationView::drawEndGame(GameWindow& window)
+{
+	sf::Text text = FontHolder::getText();
+	text.setString(GameInfoConsts::GAME_OVER_OUTPUT);
+	drawTransitions(window, text);
+}
+
+void InformationView::drawWonGame(GameWindow& window)
+{
+	sf::Text text = FontHolder::getText();
+	text.setString(GameInfoConsts::GAME_WON_OUTPUT);
+	drawTransitions(window, text);
+}
+
+void InformationView::drawLostLife(GameWindow& window)
+{
+	sf::Text text = m_lifeText;
+	drawTransitions(window, text);
+}
+
+void InformationView::drawTransitions(GameWindow& window, sf::Text& text)
+{
+	text.setCharacterSize(100);
+
+	float sizeX = text.getGlobalBounds().width;
+	float sizeY = text.getGlobalBounds().height;
+	text.setOrigin(sf::Vector2f(sizeX / 2, sizeY / 2));
+	sf::Vector2f center(GameWindowConsts::GAME_SIZE.x / 2, GameWindowConsts::GAME_SIZE.y / 2);
+	text.setPosition(sf::Vector2f(center));
+
+	window.clear();
+	window.draw(text);
+	window.display();
+	sf::sleep(sf::seconds(1));
+}
+

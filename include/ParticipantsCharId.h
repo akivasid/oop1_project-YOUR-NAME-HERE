@@ -7,5 +7,6 @@ namespace ParticipantsCharId
 	const char GUARD = '!';
 	const char DOOR = 'D';
 	const char ROCK = '@';
-	const char WALL = '#';	
+	const char WALL = '#';
+	const char NOTHING = ' ';
 }

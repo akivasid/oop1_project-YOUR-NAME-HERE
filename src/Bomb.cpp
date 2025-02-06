@@ -11,6 +11,7 @@ Bomb::Bomb(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	m_timerText.setPosition(sf::Vector2f(m_topLeft.x , m_topLeft.y ));
 	m_timerText.setCharacterSize(20);
 	m_timerText.setFillColor(sf::Color::Red);
+	loadBombSounds();	
 }
 
 
@@ -23,11 +24,15 @@ void Bomb::bombStateUpdate()
 			m_bombExploded = false;
 			m_bombExpired = true;
 			m_objectState = false;
+			m_countDownSound.stop();
+			m_explosionSound.stop();
 			setDead();
 		}
 
-		else
+		else if(!m_bombExploded)
 		{
+			m_countDownSound.stop();
+			m_explosionSound.play();
 			m_bombExploded = true;
 			m_bombExpired = false;
 		}
@@ -136,4 +141,13 @@ void Bomb::updateTimerText()
 	int secondsLeft = static_cast<int>(m_countDown.asSeconds() - m_clock.getElapsedTime().asSeconds());
 	std::string str = std::to_string(secondsLeft);
 	m_timerText.setString(str);
+}
+
+void Bomb::loadBombSounds()
+{
+	if (!m_countDownSound.openFromFile(BombConst::COUNT_DOWN_SOUND))
+		std::cerr << "failed to open file " << BombConst::COUNT_DOWN_SOUND;
+	if (!m_explosionSound.openFromFile(BombConst::EXPLOSION_SOUND))
+		std::cerr << "failed to open file " << BombConst::EXPLOSION_SOUND;
+	m_countDownSound.play();
 }

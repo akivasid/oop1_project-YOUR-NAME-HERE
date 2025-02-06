@@ -23,4 +23,7 @@ namespace GameInfoConsts
 	const std::string LIFE_OUTPUT = "Life: ";
 	const std::string SCORE_OUTPUT = "Score: ";
 	const std::string TIME_OUTPUT = "Time: ";
+	const std::string GAME_OVER_OUTPUT = "GAME OVER";
+	const std::string GAME_WON_OUTPUT = "YOU WON";
+	const std::string LIFE_LOST_SOUND = "PlayerFailedMusic.mp3";
 }

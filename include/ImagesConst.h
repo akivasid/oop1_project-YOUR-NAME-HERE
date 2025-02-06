@@ -15,4 +15,5 @@ namespace ImagesConst
 	const std::string NAME_KILL_GIFT = "GiftKillGuard.jpg";
 	const std::string NAME_LIFE_GIFT = "GiftAddLife.jpg";
 	const std::string NAME_FREEZE_GIFT = "GiftFreezeGuards.jpg";
+	const std::string BACKGROUND_NAME = "Background.jpg";
 }

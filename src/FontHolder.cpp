@@ -5,7 +5,7 @@ sf::Font FontHolder::m_font;
 
 void FontHolder::loadFont()
 {
-	if (!m_font.loadFromFile("BombermanFont.TTF"))
+	if (!m_font.loadFromFile("Athelas.ttc"))
 		std::cerr << "faild to load file" << '\n';
 }
 

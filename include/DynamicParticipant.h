@@ -14,10 +14,11 @@ public:
 	void setTopLeft(const sf::Vector2f& newTopLeft);
 	void setDirection(const sf::Vector2f& newDirection);
 	bool gotToTopLeft() const;
-	void resetLocation();
 	sf::Vector2f getDirection() const;
 	void move(const float& seconds);
+	virtual void resetLocation(GameInformation& gameInfo) = 0;
 	virtual void updateMovement(GameWindow& gameWindow, GameInformation& gameInfo) = 0;
+	
 	
 
 

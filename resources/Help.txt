@@ -1,7 +1,20 @@
-Bomberman is a strategy game where the goal is to destroy obstacles,
-defeat enemies, and find the exit to complete the level. 
-Players place bombs that detonate after a short delay and must 
-avoid getting caught in the explosions caused by themselves or enemies.
-Throughout the game, power-ups can be collected to enhance abilities, 
-such as increasing blast radius, moving faster, or placing more bombs.
-The game combines planning, agility, and quick thinking to achieve victory.
+
+
+If the player encounters an obstacle 
+(wall/rock), movement is blocked.
+
+If the player collides with a guard, 
+they lose.
+
+Movement continues in the chosen 
+direction until stopped by an obstacle.
+
+Guards react differently: 
+some move randomly, while others chase 
+the player. 
+
+Bombs can destroy rocks but not walls. 
+The explosion affects adjacent tiles. 
+
+The game ends when the player loses all 
+lives or reaches the exit door.

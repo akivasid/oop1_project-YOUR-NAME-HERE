@@ -5,6 +5,7 @@ Button::Button(const sf::Vector2f& location, const sf::Vector2f& size, const std
 	:m_buttonSize(size), m_buttonLocation(location), m_buttonName(name),
 		m_buttonText(FontHolder::getText()), m_recButton(m_buttonSize)
 {
+	m_recButton.setFillColor(sf::Color(34, 45, 67));
 	m_recButton.setPosition(m_buttonLocation);
 	textCare();
 }
@@ -46,5 +47,5 @@ void Button::textCare()
 	sf::Vector2f center(m_buttonLocation.x + m_buttonSize.x / 2, m_buttonLocation.y + m_buttonSize.y / 2);
 	m_buttonText.setPosition(sf::Vector2f(center));
 
-	m_buttonText.setFillColor(sf::Color::Red);
+	m_buttonText.setFillColor(sf::Color(230, 190, 138));
 }

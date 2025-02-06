@@ -10,6 +10,8 @@ public:
 
 	virtual ~Guard() = default;
 
+	void resetLocation(GameInformation& gameInfo) override;
+
 private:
 
 };

@@ -5,7 +5,6 @@ int main()
 {
 	FontHolder::loadFont();
 	Images::loadAllTextures();
-	//singelton
 
 	GeneralManager progManager;
 	progManager.runProgram();

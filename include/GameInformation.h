@@ -30,6 +30,9 @@ public:
 	bool getFreezeGuards();
 	bool timeEnded() const;
 	void setScoreKillGuard();
+	void drawLevel(GameWindow& window);
+	void drawEndGame(GameWindow& window);
+	void drawLostLife(GameWindow& window);
 	
 	
 private:

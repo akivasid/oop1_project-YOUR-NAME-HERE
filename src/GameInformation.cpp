@@ -126,3 +126,29 @@ void GameInformation::setScoreKillGuard()
 {
 	m_score += GameInfoConsts::KILL_GUARD;
 }
+
+void GameInformation::drawLevel(GameWindow& window)
+{
+	m_infoView.drawLevel(window);
+}
+
+void GameInformation::drawEndGame(GameWindow& window)
+{
+	if (m_life)
+		m_infoView.drawWonGame(window);
+	else
+		m_infoView.drawEndGame(window);
+}
+
+void GameInformation::drawLostLife(GameWindow& window)
+{
+	sf::Music lostSound;
+	if (!lostSound.openFromFile(GameInfoConsts::LIFE_LOST_SOUND))
+		std::cerr << "failed to open " << GameInfoConsts::LIFE_LOST_SOUND;
+	lostSound.play();
+	m_infoView.drawLostLife(window);
+	updateOutput();
+	m_infoView.drawLostLife(window);
+	sf::sleep(sf::seconds(1));
+	lostSound.stop();
+}

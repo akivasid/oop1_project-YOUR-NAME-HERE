@@ -4,11 +4,12 @@
 //================================= constructor ===========================
 
 WelcomeWindow::WelcomeWindow()
-	:BasicWindow(WelcomeConsts::WELCOME_WINDOW_SIZE, WelcomeConsts::WINDOW_NAME),
+	:BasicWindow(WelcomeConsts::WELCOME_WINDOW_SIZE, WelcomeConsts::WINDOW_NAME, WelcomeConsts::MUSIC_FILE_NAME),
 	m_play(WelcomeConsts::PLAY_LOCATION, WelcomeConsts::BUTTON_SIZE, WelcomeConsts::PLAY_NAME),
 	m_help(WelcomeConsts::HELP_LOCATION, WelcomeConsts::BUTTON_SIZE, WelcomeConsts::HELP_NAME),
 	m_exit(WelcomeConsts::EXIT_LOCATION, WelcomeConsts::BUTTON_SIZE, WelcomeConsts::EXIT_NAME), m_helpText(FontHolder::getText()),
-	m_backToMenu(WelcomeConsts::BACK_LOCATION, WelcomeConsts::BACK_BUTTON_SIZE, WelcomeConsts::BACK_NAME)
+	m_backToMenu(WelcomeConsts::BACK_LOCATION, WelcomeConsts::BACK_BUTTON_SIZE, WelcomeConsts::BACK_NAME), 
+	m_background(Images::getSprite(WelcomeConsts::WELCOME_WINDOW_SIZE))
 {
 	getTextHelp();
 }
@@ -19,6 +20,7 @@ WelcomeWindow::WelcomeWindow()
 void WelcomeWindow::draw()
 {
 	clear();
+	m_window.draw(m_background);
 	m_play.drawButton(m_window);
 	m_help.drawButton(m_window);
 	m_exit.drawButton(m_window);
@@ -45,21 +47,15 @@ bool WelcomeWindow::handleEvent()
 			case sf::Event::MouseButtonReleased:
 				pressedLocation = sf::Vector2f(float(event.mouseButton.x), float(event.mouseButton.y));
 				if (m_play.buttonPressed(pressedLocation))
-				{
-					m_window.close();
 					return true;
-				}
 
 				else if (m_exit.buttonPressed(pressedLocation))
-				{
-					m_window.close();
 					return false;
-				}
 
 				else if (m_help.buttonPressed(pressedLocation))
 				{
 					helpSituation();
-					m_help.setFrame(m_window, 0.0f, sf::Color::Red);
+					m_help.setFrame(m_window, 0.0f, sf::Color(230, 190, 138));
 					inHelp = true;
 				}
 
@@ -101,7 +97,7 @@ void WelcomeWindow::getTextHelp()
 		line += newLine + '\n';
 
 	m_helpText.setString(line);
-	m_helpText.setPosition(sf::Vector2f(0.0f, 100.0f));
+	m_helpText.setPosition(sf::Vector2f(215.0f, 215.0f));
 	m_helpText.setCharacterSize(20);
 
 }
@@ -113,7 +109,6 @@ void WelcomeWindow::helpSituation()
 	m_backToMenu.drawButton(m_window);
 	m_window.draw(m_helpText);
 	m_window.display();
-	//deleteFrame(m_help);
 }
 
 
@@ -122,40 +117,39 @@ void WelcomeWindow::handleMovement(const sf::Vector2f& locMove, sf::Vector2f& la
 	if (inHelp)
 	{
 		if (m_backToMenu.buttonPressed(locMove) && !m_backToMenu.buttonPressed(lastMove))
-			m_backToMenu.setFrame(m_window, 2.0f, sf::Color::Green);
+			m_backToMenu.setFrame(m_window, 2.0f, sf::Color::Red);
 		else if(!m_backToMenu.buttonPressed(locMove) && m_backToMenu.buttonPressed(lastMove))
-			m_backToMenu.setFrame(m_window, 0.0f, sf::Color::Green);
+			m_backToMenu.setFrame(m_window, 0.0f, sf::Color::Red);
 		helpSituation();
 	}
 	
 	else
 	{
-		if (m_play.buttonPressed(locMove) && !m_play.buttonPressed(lastMove))
-			frameArranagement(m_play);
-		else if (!m_play.buttonPressed(locMove) && m_play.buttonPressed(lastMove))
+		if (m_play.buttonPressed(locMove))
+			frameArrangement(m_play);
+		else
 			deleteFrame(m_play);
 		
-		else if (m_exit.buttonPressed(locMove) && !m_exit.buttonPressed(lastMove))
-			frameArranagement(m_exit);
-		else if (!m_exit.buttonPressed(locMove) && m_exit.buttonPressed(lastMove))
+		if (m_exit.buttonPressed(locMove))
+			frameArrangement(m_exit);
+		else 
 			deleteFrame(m_exit);
 		
-		else if (m_help.buttonPressed(locMove) && !m_help.buttonPressed(lastMove))
-			frameArranagement(m_help);
-		else if (!m_help.buttonPressed(locMove) && m_help.buttonPressed(lastMove))
+		if (m_help.buttonPressed(locMove))
+			frameArrangement(m_help);
+		else 
 			deleteFrame(m_help);
+		draw();
 	}
 }
 
 
-void WelcomeWindow::frameArranagement(Button& button) 
+void WelcomeWindow::frameArrangement(Button& button) 
 {
-	button.setFrame(m_window, 2.0f, sf::Color::Green);
-	draw();
+	button.setFrame(m_window, 2.0f, sf::Color(230, 190, 138));
 }
 
 void WelcomeWindow::deleteFrame(Button& button)
 {
-	button.setFrame(m_window, 0.0f, sf::Color::Green);
-	draw();
+	button.setFrame(m_window, 0.0f, sf::Color(230, 190, 138));
 }

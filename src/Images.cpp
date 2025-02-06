@@ -1,6 +1,7 @@
 #include "Images.h"
 
 std::vector <sf::Texture> Images::m_pictures;
+sf::Texture Images::m_background;
 
 //=============================================== public functions ======================================
 
@@ -17,11 +18,11 @@ void Images::loadAllTextures()
 	loadKillGuard();
 	loadFreezeGuard();
 	loadLifeGift();
-
+	loadBackground();
 }
 
 
-sf::Sprite Images::getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize)//check for memory exception
+sf::Sprite Images::getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize)
 {
 	int index = static_cast<int>(type);
 	
@@ -29,6 +30,19 @@ sf::Sprite Images::getSprite(const ParticipantType& type, const sf::Vector2f& wa
 	sprite.setTexture(m_pictures[index]);
 	float scaleX =  wantedSize.x / m_pictures[index].getSize().x;
 	float scaleY =  wantedSize.y / m_pictures[index].getSize().y;
+	sprite.setScale(sf::Vector2f(scaleX, scaleY));
+
+	return sprite;
+}
+
+
+sf::Sprite Images::getSprite(const sf::Vector2f& wantedSize)
+{
+	
+	sf::Sprite sprite;
+	sprite.setTexture(m_background);
+	float scaleX = wantedSize.x / m_background.getSize().x;
+	float scaleY = wantedSize.y / m_background.getSize().y;
 	sprite.setScale(sf::Vector2f(scaleX, scaleY));
 
 	return sprite;
@@ -110,4 +124,10 @@ void Images::loadLifeGift()
 {
 	if (!m_pictures.emplace_back().loadFromFile(ImagesConst::NAME_LIFE_GIFT))
 		std::cerr << "The image named" << ImagesConst::NAME_LIFE_GIFT << "was not loaded\n";
+}
+
+void Images::loadBackground()
+{
+	if (!m_background.loadFromFile(ImagesConst::BACKGROUND_NAME))
+		std::cerr << "The image named" << ImagesConst::BACKGROUND_NAME << "was not loaded\n";
 }

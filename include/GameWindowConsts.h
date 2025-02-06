@@ -10,4 +10,5 @@ namespace GameWindowConsts
 	const std::string NAME_PLAYLIST_LEVELS = "Playlist.txt";
 
 	const std::string GAME_WINDOW_NAME = "GAME WINDOW";	
+	const std::string GAME_MUSIC = "GameMusic.mp3";	
 }

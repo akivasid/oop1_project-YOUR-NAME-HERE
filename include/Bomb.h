@@ -13,6 +13,8 @@ public:
 	//constructor
 	Bomb(const sf::Vector2f& location, const sf::Vector2f& wantedSize);
 
+	//dtor
+
 	//public functions
 	bool bombExploded() const;
 	bool bombExpired() const;
@@ -34,19 +36,23 @@ private:
 	sf::Sprite m_downPicture;
 	sf::Sprite m_rightPicture;
 	sf::Sprite m_leftPicture;
+
 	sf::Vector2f m_upLocation;
 	sf::Vector2f m_downLocation;
 	sf::Vector2f m_rightLocation;
 	sf::Vector2f m_leftLocation;
+
 	bool m_upValidation;
 	bool m_downValidation;
 	bool m_rightValidation;
 	bool m_leftValidation;
+
 	sf::Clock m_clock;
 	sf::Time m_countDown;
 	sf::Time m_explosionTime;
 	sf::Text m_timerText;
-	
+	sf::Music m_countDownSound;
+	sf::Music m_explosionSound;
 	bool m_bombExploded;
 	bool m_bombExpired;
 
@@ -54,6 +60,5 @@ private:
 	void setExplosionPictures(const sf::Vector2f& wantedSize);
 	void setExplosionLocation(const sf::Vector2f& location, const sf::Vector2f& wantedSize);
 	void updateTimerText();
-	
-	
+	void loadBombSounds();
 };

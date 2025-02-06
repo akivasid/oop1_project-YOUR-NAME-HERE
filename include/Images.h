@@ -11,11 +11,13 @@ public:
 	//public functions
 	static void loadAllTextures();
 	static sf::Sprite getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize);
+	static sf::Sprite getSprite(const sf::Vector2f& wantedSize);
 	
 	
 private:
 	//members
 	static std::vector <sf::Texture> m_pictures;
+	static sf::Texture m_background;
 	
 	//private functions
 	static void loadPlayer();
@@ -29,4 +31,5 @@ private:
 	static void loadTimeGift();
 	static void loadFreezeGuard();
 	static void loadLifeGift();
+	static void loadBackground();
 };

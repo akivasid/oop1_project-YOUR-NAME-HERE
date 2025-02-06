@@ -18,11 +18,17 @@ void Door::handleCollision(Player& player, GameInformation& gameInfo)
 
 
 void Door::handleCollision(SmartGuard& guard, GameInformation& gameInfo)
-{}
+{
+	if (guard.getTopLeft() == m_topLeft)
+		guard.setDirection(MovementConsts::NO_DIRECTION);
+}
 
 
 void Door::handleCollision(DumbGuard& guard, GameInformation& gameInfo)
-{}
+{
+	if (guard.getTopLeft() == m_topLeft)
+		guard.setDirection(MovementConsts::NO_DIRECTION);
+}
 
 void Door::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 {

@@ -18,6 +18,7 @@ public:
 	void handleCollision(DumbGuard& guard, GameInformation& gameInfo) override;
 	void handleCollision(Player& player, GameInformation& gameInfo) override;
 	void handleCollision(Bomb& bomb, GameInformation& gameInfo) override;
+	void resetLocation(GameInformation& gameInfo) override;
 
 	  
 private:

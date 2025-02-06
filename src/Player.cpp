@@ -61,3 +61,12 @@ void Player::handleCollision(Bomb& bomb, GameInformation& gameInfo)
 	if (bomb.bombExploded() && bomb.inExplosionArea(m_topLeft))
 		gameInfo.lostLife();
 }
+
+void Player::resetLocation(GameInformation& gameInfo)
+{
+	m_topLeft = m_firstLocation;
+	m_curLocation = m_topLeft;
+	m_direction = MovementConsts::NO_DIRECTION;
+	gameInfo.setPlayerLocation(m_topLeft);
+	m_picture.setPosition(m_topLeft);
+}

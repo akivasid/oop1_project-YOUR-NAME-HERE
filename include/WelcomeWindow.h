@@ -4,6 +4,7 @@
 #include "BasicWindow.h"
 #include "Button.h"
 #include "WelcomeConsts.h"
+#include "Images.h"
 
 
 
@@ -25,11 +26,12 @@ private:
 	Button m_exit;
 	Button m_backToMenu;
 	sf::Text m_helpText;
+	sf::Sprite m_background;
 
 	//private functions
 	void getTextHelp();
 	void helpSituation();
 	void handleMovement(const sf::Vector2f& locMove, sf::Vector2f& lastMove, bool inHelp);
-	void frameArranagement(Button& button);
+	void frameArrangement(Button& button);
 	void deleteFrame(Button& button);
 };
