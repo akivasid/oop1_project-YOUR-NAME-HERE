@@ -25,7 +25,7 @@ void GameInformation::initializer(int guards)
 	m_score += m_possiblePoints;
 	m_possiblePoints = GameInfoConsts::END_LEVEL + GameInfoConsts::LEVEL_GUARD * guards;
 	m_gameClock.restart();
-	m_countDown = GameInfoConsts::LEVEL_TIME - sf::seconds(10 * m_level);
+	m_countDown = GameInfoConsts::LEVEL_TIME - sf::seconds(10.f * m_level);
 	m_freezeGuards = false;
 	m_killGuard = false;
 	m_infoView.updateOutput(m_level, m_life, m_score, m_countDown.asSeconds());

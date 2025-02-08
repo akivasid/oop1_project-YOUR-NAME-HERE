@@ -37,10 +37,10 @@ bool DynamicParticipant::gotToTopLeft() const
 
 void DynamicParticipant::move(const float& seconds)
 {
-	if ((m_direction == MovementConsts::DIRECTION_DOWN && (m_curLocation.y - m_topLeft.y) >= 0)
-		|| (m_direction == MovementConsts::DIRECTION_UP && (m_curLocation.y - m_topLeft.y) <= 0)
-		|| (m_direction == MovementConsts::DIRECTION_RIGHT && (m_curLocation.x - m_topLeft.x) >= 0)
-		|| (m_direction == MovementConsts::DIRECTION_LEFT && (m_curLocation.x - m_topLeft.x) <= 0))
+	if ((m_direction == MovementConsts::DIRECTION_DOWN && (getNewLocation(seconds).y - m_topLeft.y) >= 0)
+		|| (m_direction == MovementConsts::DIRECTION_UP && (getNewLocation(seconds).y - m_topLeft.y) <= 0)
+		|| (m_direction == MovementConsts::DIRECTION_RIGHT && (getNewLocation(seconds).x - m_topLeft.x) >= 0)
+		|| (m_direction == MovementConsts::DIRECTION_LEFT && (getNewLocation(seconds).x - m_topLeft.x) <= 0))
 	{
 		m_curLocation = m_topLeft;
 		m_direction = MovementConsts::NO_DIRECTION;
