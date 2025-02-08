@@ -119,7 +119,6 @@ void GameManager::handleMovement()
 		if (m_dynamic[i]->gotToTopLeft())
 		{
 			sf::Vector2f prevTopLeft(m_dynamic[i]->getTopLeft());
-			sf::Vector2f prevDirection(m_dynamic[i]->getDirection());
 			m_dynamic[i]->updateMovement(m_gameWindow, m_gameInfo);
 			if (m_dynamic[i]->getDirection() != MovementConsts::NO_DIRECTION)
 				manageDynamicCollisions(prevTopLeft, i);
