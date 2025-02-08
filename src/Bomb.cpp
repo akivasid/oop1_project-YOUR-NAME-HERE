@@ -1,6 +1,6 @@
 #include "Bomb.h"
 
-
+//======================================= constructor ===============================================
 Bomb::Bomb(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:Participant(location, wantedSize, ParticipantType::Bomb), m_clock(), m_countDown(BombConst::COUNT_DOWN),
 	m_explosionTime(BombConst::EXPLOSION_TIME),	m_bombExploded(false), m_bombExpired(false),
@@ -14,6 +14,7 @@ Bomb::Bomb(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	loadBombSounds();	
 }
 
+//===================================== public functions ===================================
 
 void Bomb::bombStateUpdate()
 {
@@ -91,7 +92,6 @@ bool Bomb::inExplosionArea(const sf::Vector2f& location)
 
 void Bomb::drawBomb(GameWindow& gameWindow)
 {
-	
 	if (m_bombExploded)
 	{
 		m_picture = m_downPicture;
@@ -114,6 +114,8 @@ void Bomb::drawBomb(GameWindow& gameWindow)
 		gameWindow.draw(m_timerText);
 	}
 }
+
+//===================================== private functions ===================================
 
 
 void Bomb::setExplosionLocation(const sf::Vector2f& location, const sf::Vector2f& wantedSize)

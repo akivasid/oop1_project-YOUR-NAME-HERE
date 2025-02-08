@@ -3,6 +3,7 @@
 
 sf::Font FontHolder::m_font;
 
+// ======================================= static public functions ==============================
 void FontHolder::loadFont()
 {
 	if (!m_font.loadFromFile("Athelas.ttc"))

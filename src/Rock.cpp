@@ -1,10 +1,11 @@
 #include "Rock.h"
 
-
+//========================================== constructor =====================================
 Rock::Rock(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:StaticParticipant(location, wantedSize, ParticipantType::Rock)
 {}
 
+//========================================== public functions =====================================
 
 
 void Rock::handleCollision(Participant& obj, GameInformation& gameInfo)

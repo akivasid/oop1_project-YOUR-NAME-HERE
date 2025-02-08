@@ -1,6 +1,8 @@
 #include "InformationView.h"
 
 
+// ======================================= constructor ==========================
+
 InformationView::InformationView()
 	: m_rectangle(GameInfoConsts::INFO_SIZE), m_levelText(FontHolder::getText()), m_lifeText(FontHolder::getText()),
 	m_timeText(FontHolder::getText()), m_scoreText(FontHolder::getText())
@@ -13,6 +15,7 @@ InformationView::InformationView()
 	m_levelText.setPosition(GameInfoConsts::LEVEL_TEXT_LOCATION);
 }
 
+// ======================================= public functions=================================
 
 void InformationView::updateOutput(const unsigned level, const int life, const unsigned score, const float timeLeft)
 {
@@ -20,34 +23,6 @@ void InformationView::updateOutput(const unsigned level, const int life, const u
 	lifeOutput(life);
 	scoreOutput(score);
 	timeOutput(timeLeft);
-}
-
-void InformationView::levelOutput(const unsigned level)
-{
-	std::string levelStr = GameInfoConsts::LEVEL_OUTPUT + std::to_string(level);
-	m_levelText.setString(levelStr);
-
-}
-
-void InformationView::lifeOutput(const int life)
-{
-	std::string lifeStr = GameInfoConsts::LIFE_OUTPUT + std::to_string(life);
-	m_lifeText.setString(lifeStr);
-}
-
-void InformationView::scoreOutput(const unsigned score)
-{
-	std::string scoreStr = GameInfoConsts::SCORE_OUTPUT + std::to_string(score);
-	m_scoreText.setString(scoreStr);
-}
-
-void InformationView::timeOutput(const float timeLeft)
-{
-	std::string timeStr = GameInfoConsts::TIME_OUTPUT + std::to_string(static_cast <int>(timeLeft) / 60)
-		+ ":" + (((static_cast <int>(timeLeft) % 60) < 10) ? "0" : "")
-		+ std::to_string(static_cast <int>(timeLeft) % 60);
-
-	m_timeText.setString(timeStr);
 }
 
 
@@ -60,11 +35,13 @@ void InformationView::draw(GameWindow& window)
 	window.draw(m_scoreText);
 }
 
+
 void InformationView::drawLevel(GameWindow& window)
 {
 	sf::Text level = m_levelText;
 	drawTransitions(window, level);
 }
+
 
 void InformationView::drawEndGame(GameWindow& window)
 {
@@ -73,6 +50,7 @@ void InformationView::drawEndGame(GameWindow& window)
 	drawTransitions(window, text);
 }
 
+
 void InformationView::drawWonGame(GameWindow& window)
 {
 	sf::Text text = FontHolder::getText();
@@ -80,11 +58,15 @@ void InformationView::drawWonGame(GameWindow& window)
 	drawTransitions(window, text);
 }
 
+
 void InformationView::drawLostLife(GameWindow& window)
 {
 	sf::Text text = m_lifeText;
 	drawTransitions(window, text);
 }
+
+
+// ======================================= private functions =====================================
 
 void InformationView::drawTransitions(GameWindow& window, sf::Text& text)
 {
@@ -102,3 +84,34 @@ void InformationView::drawTransitions(GameWindow& window, sf::Text& text)
 	sf::sleep(sf::seconds(1));
 }
 
+
+void InformationView::levelOutput(const unsigned level)
+{
+	std::string levelStr = GameInfoConsts::LEVEL_OUTPUT + std::to_string(level);
+	m_levelText.setString(levelStr);
+
+}
+
+
+void InformationView::lifeOutput(const int life)
+{
+	std::string lifeStr = GameInfoConsts::LIFE_OUTPUT + std::to_string(life);
+	m_lifeText.setString(lifeStr);
+}
+
+
+void InformationView::scoreOutput(const unsigned score)
+{
+	std::string scoreStr = GameInfoConsts::SCORE_OUTPUT + std::to_string(score);
+	m_scoreText.setString(scoreStr);
+}
+
+
+void InformationView::timeOutput(const float timeLeft)
+{
+	std::string timeStr = GameInfoConsts::TIME_OUTPUT + std::to_string(static_cast <int>(timeLeft) / 60)
+		+ ":" + (((static_cast <int>(timeLeft) % 60) < 10) ? "0" : "")
+		+ std::to_string(static_cast <int>(timeLeft) % 60);
+
+	m_timeText.setString(timeStr);
+}

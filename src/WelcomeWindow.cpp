@@ -79,8 +79,8 @@ bool WelcomeWindow::handleEvent()
 	return false;
 }
 
-//================================= public functions ===========================
 
+//================================= private functions ===========================
 
 
 void WelcomeWindow::getTextHelp()
@@ -97,8 +97,8 @@ void WelcomeWindow::getTextHelp()
 		line += newLine + '\n';
 
 	m_helpText.setString(line);
-	m_helpText.setPosition(sf::Vector2f(215.0f, 215.0f));
-	m_helpText.setCharacterSize(20);
+	m_helpText.setPosition(sf::Vector2f(215.0f, 30.0f));
+	m_helpText.setCharacterSize(40);
 
 }
 

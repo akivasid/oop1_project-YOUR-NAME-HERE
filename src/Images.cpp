@@ -3,7 +3,7 @@
 std::vector <sf::Texture> Images::m_pictures;
 sf::Texture Images::m_background;
 
-//=============================================== public functions ======================================
+//=============================================== static public functions ======================================
 
 void Images::loadAllTextures()
 {

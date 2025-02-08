@@ -1,5 +1,6 @@
 #include "GiftAddTime.h"
 
+// ======================================= constructor ==========================
 
 GiftAddTime::GiftAddTime(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:Gift(location, wantedSize, ParticipantType::GiftAddTime), m_addTimeAmount(sf::seconds(60))

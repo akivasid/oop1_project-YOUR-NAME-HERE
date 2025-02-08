@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.26)
 
 project (oop1_project)
 set (COURSE_EXAMPLE OFF)
-set (MY_AUTHORS "YOUR-NAME-HERE")
+set (MY_AUTHORS "aharon_moshe_shamsian-akiva_moshe_sudranski")
 
 include (cmake/CompilerSettings.cmake)
 

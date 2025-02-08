@@ -22,5 +22,6 @@ public:
 
 	  
 private:
+	//private functions
 	void changeDirection();	
 };

@@ -14,11 +14,11 @@ class WelcomeWindow : public BasicWindow
 public:
 	//constructor
 	WelcomeWindow();
+
 	//public functions
 	void draw();
 	bool handleEvent();
 	 
-
 private:
 	//members
 	Button m_play;

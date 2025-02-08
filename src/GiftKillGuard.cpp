@@ -1,5 +1,6 @@
 #include "GiftKillGuard.h"
 
+// ======================================= constructor ==========================
 
 GiftKillGuard::GiftKillGuard(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:Gift(location, wantedSize, ParticipantType::GiftKillGuard)

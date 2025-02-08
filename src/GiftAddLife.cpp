@@ -1,5 +1,6 @@
 #include "GiftAddLife.h"
 
+// ======================================= constructor ==========================
 
 GiftAddLife::GiftAddLife(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:Gift(location, wantedSize, ParticipantType::GiftAddLife), m_addLifeAmount(1)

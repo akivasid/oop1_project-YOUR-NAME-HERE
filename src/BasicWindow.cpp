@@ -38,5 +38,6 @@ void BasicWindow::stopMusic()
 
 void BasicWindow::playMusic()
 {
+	m_backgroundMusic.setLoop(true);
 	m_backgroundMusic.play();
 }

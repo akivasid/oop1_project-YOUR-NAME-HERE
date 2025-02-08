@@ -13,8 +13,6 @@ public:
 	//constructor
 	Bomb(const sf::Vector2f& location, const sf::Vector2f& wantedSize);
 
-	//dtor
-
 	//public functions
 	bool bombExploded() const;
 	bool bombExpired() const;

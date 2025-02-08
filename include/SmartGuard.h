@@ -20,12 +20,10 @@ public:
 	void handleCollision(Player& player, GameInformation& gameInfo) override;
 	void handleCollision(Bomb& bomb, GameInformation& gameInfo) override;
 	
-	
 private:
 	//members
 	sf::Vector2f m_target;
 	bool m_stuckInPlace;
-	
 	
 	//private functions
 	void changeDirection();

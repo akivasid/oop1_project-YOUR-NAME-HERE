@@ -8,6 +8,7 @@ public:
 	//constructor
 	DynamicParticipant(const sf::Vector2f& location, const sf::Vector2f& wantedSize, const ParticipantType& type, const float& speed);
 
+	//desructor
 	virtual ~DynamicParticipant() = default;
 
 	//public functions
@@ -18,9 +19,6 @@ public:
 	void move(const float& seconds);
 	virtual void resetLocation(GameInformation& gameInfo) = 0;
 	virtual void updateMovement(GameWindow& gameWindow, GameInformation& gameInfo) = 0;
-	
-	
-
 
 protected:
 	//members
@@ -28,9 +26,7 @@ protected:
 	sf::Vector2f m_direction;
 	const sf::Vector2f m_firstLocation;
 	float m_speed;
-	//sf::Clock m_clock;
 	
 	//private functions
 	sf::Vector2f getNewLocation(const float& seconds) const;
-	
 };

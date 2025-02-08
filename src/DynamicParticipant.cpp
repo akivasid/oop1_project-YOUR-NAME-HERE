@@ -1,15 +1,18 @@
 #include "DynamicParticipant.h"
 
+
+// ===================================================== constructor =====================================================
 DynamicParticipant::DynamicParticipant(const sf::Vector2f& location, const sf::Vector2f& wantedSize, const ParticipantType& type, const float& speed)
 	:Participant(location, wantedSize, type), m_direction(0.f, 0.f), m_curLocation(location), m_firstLocation(m_curLocation), m_speed(speed)
 {}
+
+
+// ===================================================== public functions =====================================================
 
 void DynamicParticipant::setTopLeft(const sf::Vector2f& newTopLeft)
 {
 	m_topLeft = newTopLeft;
 }
-
-
 
 
 sf::Vector2f DynamicParticipant::getDirection() const
@@ -37,7 +40,7 @@ void DynamicParticipant::move(const float& seconds)
 	if ((m_direction == MovementConsts::DIRECTION_DOWN && (m_curLocation.y - m_topLeft.y) >= 0)
 		|| (m_direction == MovementConsts::DIRECTION_UP && (m_curLocation.y - m_topLeft.y) <= 0)
 		|| (m_direction == MovementConsts::DIRECTION_RIGHT && (m_curLocation.x - m_topLeft.x) >= 0)
-		|| (m_direction == MovementConsts::DIRECTION_LEFT && (m_curLocation.x - m_topLeft.x) <= 0))//add check
+		|| (m_direction == MovementConsts::DIRECTION_LEFT && (m_curLocation.x - m_topLeft.x) <= 0))
 	{
 		m_curLocation = m_topLeft;
 		m_direction = MovementConsts::NO_DIRECTION;

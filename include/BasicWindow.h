@@ -17,7 +17,6 @@ public:
 	void stopMusic();
 	void playMusic();
 	
-
 protected:
 	//members
 	sf::Vector2f m_windowSize;

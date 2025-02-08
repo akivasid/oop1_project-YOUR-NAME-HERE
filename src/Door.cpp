@@ -5,7 +5,7 @@ Door::Door(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:StaticParticipant(location, wantedSize, ParticipantType::Door)
 {}
 
-//public functions
+//=================================================== public functions =============================
 void Door::handleCollision(Participant& obj, GameInformation& gameInfo)
 {}
 

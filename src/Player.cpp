@@ -19,18 +19,6 @@ void Player::updateMovement(GameWindow& gameWindow, GameInformation& gameInfo)
 }
 
 
-void Player::changeDirection()
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		m_direction = MovementConsts::DIRECTION_RIGHT;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		m_direction = MovementConsts::DIRECTION_LEFT;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		m_direction = MovementConsts::DIRECTION_UP;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		m_direction = MovementConsts::DIRECTION_DOWN;
-}
-
 void Player::handleCollision(Participant& obj, GameInformation& gameInfo)
 {
 	obj.handleCollision(*this, gameInfo);
@@ -69,4 +57,18 @@ void Player::resetLocation(GameInformation& gameInfo)
 	m_direction = MovementConsts::NO_DIRECTION;
 	gameInfo.setPlayerLocation(m_topLeft);
 	m_picture.setPosition(m_topLeft);
+}
+
+//======================================= private functions =========================================
+
+void Player::changeDirection()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		m_direction = MovementConsts::DIRECTION_RIGHT;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		m_direction = MovementConsts::DIRECTION_LEFT;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		m_direction = MovementConsts::DIRECTION_UP;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		m_direction = MovementConsts::DIRECTION_DOWN;
 }

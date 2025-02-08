@@ -13,10 +13,6 @@ public:
 	void drawButton(sf::RenderWindow& window);
 	void setFrame(sf::RenderWindow& window, const float& frameThickness, const sf::Color& color);
 
-
-
-
-
 private:
 	//members
 	sf::Vector2f m_buttonSize;

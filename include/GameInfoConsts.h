@@ -12,7 +12,7 @@ namespace GameInfoConsts
 	const sf::Vector2f TIME_TEXT_LOCATION(50.0f, 1260.0f);
 	const sf::Color INFO_COLOR(sf::Color(103, -0, 30));
 
-	const sf::Time LEVEL_TIME = sf::seconds(240);//different times for levels 
+	const sf::Time LEVEL_TIME = sf::seconds(240); 
 
 	const unsigned LIFE = 5;
 	const unsigned KILL_GUARD = 5;
@@ -26,4 +26,6 @@ namespace GameInfoConsts
 	const std::string GAME_OVER_OUTPUT = "GAME OVER";
 	const std::string GAME_WON_OUTPUT = "YOU WON";
 	const std::string LIFE_LOST_SOUND = "PlayerFailedMusic.mp3";
+	const std::string GOT_LIFE_SOUND = "LifeOneUp.mp3";
+	const std::string KILL_GUARD_SOUND = "KillGuardSound.mp3";
 }

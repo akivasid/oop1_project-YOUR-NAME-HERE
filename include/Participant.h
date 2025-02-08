@@ -19,9 +19,10 @@ public:
 	//constructor
 	Participant(const sf::Vector2f& location, const sf::Vector2f& wantedSize, const ParticipantType& type);
 
+	//desructor
 	virtual ~Participant() = default;
 
-	//public
+	//public functions
 	sf::Vector2f getTopLeft() const;
 	const ParticipantType getType() const;
 	void draw(GameWindow& gameWindow);

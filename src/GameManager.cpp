@@ -20,7 +20,7 @@ void GameManager::runGame()
 		nameLevel.clear();
 		handleEvents();
 		clearObjects();
-		if (m_gameInfo.getLife() <= 0 || !m_gameWindow.isOpen())
+		if (m_gameInfo.getLife() <= 0 || !m_gameWindow.isOpen() || m_gameInfo.noTime())
 			break;
 	}
 	
@@ -119,6 +119,7 @@ void GameManager::handleMovement()
 		if (m_dynamic[i]->gotToTopLeft())
 		{
 			sf::Vector2f prevTopLeft(m_dynamic[i]->getTopLeft());
+			sf::Vector2f prevDirection(m_dynamic[i]->getDirection());
 			m_dynamic[i]->updateMovement(m_gameWindow, m_gameInfo);
 			if (m_dynamic[i]->getDirection() != MovementConsts::NO_DIRECTION)
 				manageDynamicCollisions(prevTopLeft, i);
@@ -288,7 +289,7 @@ void GameManager::clearObjects()
 
 void GameManager::createGifts(const int row, const int col)
 {
-	int random = (std::rand()) % 50;
+	int random = std::rand() % 60;
 	switch (random)
 	{
 	case 1:

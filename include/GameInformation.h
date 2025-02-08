@@ -33,6 +33,7 @@ public:
 	void drawLevel(GameWindow& window);
 	void drawEndGame(GameWindow& window);
 	void drawLostLife(GameWindow& window);
+	bool noTime();
 	
 	
 private:
@@ -50,4 +51,7 @@ private:
 	sf::Time m_freezeTime;
 	sf::Clock m_freezeClock;
 	InformationView m_infoView;
+	sf::Music m_lifeSound;
+	sf::Music m_lostLifeSound;
+	sf::Music m_killGuardSound;
 };

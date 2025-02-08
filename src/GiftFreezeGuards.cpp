@@ -1,5 +1,6 @@
 #include "GiftFreezeGuards.h"
 
+// ======================================= constructor ==========================
 
 GiftFreezeGuards::GiftFreezeGuards(const sf::Vector2f& location, const sf::Vector2f& wantedSize)
 	:Gift(location, wantedSize, ParticipantType::GiftFreezeGuards)

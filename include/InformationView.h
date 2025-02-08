@@ -7,16 +7,16 @@
 class InformationView
 {
 public:
+	//constructor
 	InformationView();
 
+	//public functions
 	void updateOutput(const unsigned level, const int life, const unsigned score, const float timeLeft);
 	void draw(GameWindow& window);
 	void drawLevel(GameWindow& window);
 	void drawEndGame(GameWindow& window);
 	void drawLostLife(GameWindow& window);
 	void drawWonGame(GameWindow& window);
-
-
 
 private:
 	//members
@@ -32,5 +32,4 @@ private:
 	void scoreOutput(const unsigned score);
 	void timeOutput(const float timeLeft);
 	void drawTransitions(GameWindow& window, sf::Text& text);
-
 };

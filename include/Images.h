@@ -13,7 +13,6 @@ public:
 	static sf::Sprite getSprite(const ParticipantType& type, const sf::Vector2f& wantedSize);
 	static sf::Sprite getSprite(const sf::Vector2f& wantedSize);
 	
-	
 private:
 	//members
 	static std::vector <sf::Texture> m_pictures;
